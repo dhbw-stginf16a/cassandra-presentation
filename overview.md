@@ -1,0 +1,17 @@
+- Wide Column Store
+- Properties (overview)
+- What happens when a new node is added
+  - How the cluster is initially set up
+- What usecases Cassandra is (not) suited for (and pros and cons)
+- How to use CQL
+  - Compare to API (key-value)
+  - Compare to SQL
+- How to model data (or rather tables)
+- How secondary indexes work and when to use them
+- Write process (single node)
+- Read process (single node)
+- How data is replicated (when everything is already set up)
+- How data is read with consensus
+- How data is stored on disk
+- How to set up as an admin / Must knows
+- Summary/Conclusion
