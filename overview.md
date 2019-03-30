@@ -1,4 +1,4 @@
-- Wide Column Store
+- Wide Column Store - David
 - Properties (overview) - David
 - What usecases Cassandra is (not) suited for (and pros and cons) - David
 - How to use CQL - Erik
