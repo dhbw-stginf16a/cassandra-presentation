@@ -1,17 +1,17 @@
 - Wide Column Store
 - Properties (overview) - David
 - What usecases Cassandra is (not) suited for (and pros and cons) - David
-- How to use CQL
+- How to use CQL - Erik
   - Compare to API (key-value)
   - Compare to SQL
 - How to model data (or rather tables) - David
-- How secondary indexes work and when to use them
-- Write process (single node)
-- Read process (single node)
-- What happens when a new node is added
+- How secondary indexes work and when to use them - Daniel
+- Write process (single node) - Erik
+- Read process (single node) - Erik
+- What happens when a new node is added - Daniel
   - How the cluster is initially set up
-- How data is replicated (when everything is already set up)
-- How data is read with consensus
-- How data is stored on disk
-- How to set up as an admin / Must knows
-- Summary/Conclusion
+- How data is replicated (when everything is already set up) - Daniel
+- How data is read with consensus - Daniel
+- How data is stored on disk - Erik
+- How to set up as an admin / Must knows - Daniel
+- Summary/Conclusion - All
