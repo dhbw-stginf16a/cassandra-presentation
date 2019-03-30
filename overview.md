@@ -1,12 +1,12 @@
 - Wide Column Store
-- Properties (overview)
+- Properties (overview) - David
 - What happens when a new node is added
   - How the cluster is initially set up
-- What usecases Cassandra is (not) suited for (and pros and cons)
+- What usecases Cassandra is (not) suited for (and pros and cons) - David
 - How to use CQL
   - Compare to API (key-value)
   - Compare to SQL
-- How to model data (or rather tables)
+- How to model data (or rather tables) - David
 - How secondary indexes work and when to use them
 - Write process (single node)
 - Read process (single node)
