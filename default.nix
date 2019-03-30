@@ -1,39 +1,69 @@
 with import <nixpkgs> {};
+
 let
-  reveal-js = fetchFromGitHub {
-    owner = "hakimel";
-    repo = "reveal.js";
-    rev = "3.7.0";
-    sha256 = "1raqacq2c6rcbqkli1jygw68nqs090zm59zrbdvflk6y1mzk93nd";
+  latexPackage = texlive.combine {
+    inherit (texlive)
+      scheme-small
+
+      latexmk
+
+      beamer
+      beamertheme-metropolis
+      appendixnumberbeamer
+      ccicons
+      pgfopts
+      pgfplots
+
+      siunitx
+      ;
   };
-  #reveal-js = fetchurl {
-  #  name = "reveal.js.tar.gz";
-  #  url = "https://github.com/hakimel/reveal.js/archive/master.tar.gz";
-  #  sha256 = "0hxwrdg547q9x51zji373l8jvj00v6zlqxmwvfcf51fj62bn7pf7";
-  #};
-  src = ./.;
-  #src = fetchFromGitHub {
-  #  owner = "dhbw-stginf16a";
-  #  repo = "cassandra-presentation";
-  #  rev = "";
-  #  sha256 = "";
-  #};
+
+  pplatex =
+    stdenv.mkDerivation rec {
+      name = "pplatex-${version}";
+      version = "1.0-rc2";
+
+      src = fetchFromGitHub {
+        owner = "stefanhepp";
+        repo = "pplatex";
+        rev = name;
+        sha256 = "0xw7nvi2l15iyp9sm8vmmqghi54v99bcivqvx89f5v2gw0kw47k3";
+      };
+
+      buildInputs = [ cmake pkgconfig pcre ];
+
+      installPhase = ''
+        mkdir -p $out/bin
+        cp src/pplatex $out/bin/pplatex
+      '';
+    };
+
+
 in
-stdenv.mkDerivation {
-  name = "cassandra-presentation";
+  stdenv.mkDerivation rec {
+    name = "cassandra-overview";
 
-  srcs = [ src reveal-js ];
-  #sourceRoot = src.name;
+    src = ./.;
 
-  buildInputs = with pkgs; [ pandoc ];
+    buildInputs = [
+      latexPackage pplatex
+    ];
 
-  preBuild = "make clean";
+    # We could be building from an unclean directory, so remove intermediate files first
+    preBuild = "make clean";
 
-  installPhase = ''
-    mkdir -p $out
-    cp presentation.html $out/index.html
-    cp -r ${reveal-js.name} $out
-  '';
+    installPhase = ''
+      mkdir $out
+      mv presentation.pdf $out
+    '';
 
-  meta.description = "Presentation introduction Apache Cassandra";
-}
+    doCheck = false;
+    checkPhase = ''
+      function build_error() {
+        echo "=====> There have been warnings or errors in the last run, fix them!"
+        exit 1
+      }
+
+      cat latexmk_log.txt | grep "o) Errors:" | tail -1 | grep "o) Errors: 0, Warnings: 0" || build_error
+    '';
+  }

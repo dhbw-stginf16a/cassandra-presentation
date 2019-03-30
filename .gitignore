@@ -1,2 +1,15 @@
-reveal.js/
-presentation.html
+# Nix
+result
+
+# Latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.pdf
+*.snm
+*.toc
+*.vrb
+latexmk_log.txt
