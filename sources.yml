@@ -1,0 +1,98 @@
+Wide-Column-Store:
+  - https://en.wikipedia.org/wiki/Wide_column_store
+Users:
+  Cern: https://cdsweb.cern.ch/record/1432912/files/ATL-DAQ-SLIDE-2012-067.pdf
+  Netflix: https://www.slideshare.net/adrianco/migrating-netflix-from-oracle-to-global-cassandra/28-Remote_Copies_Cassandra_duplicates_across
+  eBay:
+    - https://www.slideshare.net/jaykumarpatel/cassandra-at-ebay-13920376
+    - https://www.datastax.com/resources/casestudies/ebay
+Local Read/Write:
+  Commit-Log: https://stackoverflow.com/questions/34592948/what-is-the-purpose-of-cassandras-commit-log/34594958#34594958
+  Write: https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html
+  Read: https://docs.datastax.com/en/cassandra/3.0/cassandra/images/dml_caching-reads_12.png
+  Update: https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlWriteUpdate.html
+  Delete: https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlAboutDeletes.html
+Ring/Token:
+  Overview:
+    - http://abiasforaction.net/wp-content/uploads/2015/01/Cassandra-Ring.jpg
+    - https://engineeringblog.yelp.com/2016/06/monitoring-cassandra-at-scale.html
+  Virtual-Nodes:
+    - https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configVnodesEnable.html
+  Balancing:
+    - https://www.datastax.com/dev/blog/balancing-your-cassandra-cluster
+Rebalance: https://www.datastax.com/wp-content/uploads/2012/02/numofmoves.png
+CAP:
+  - https://codahale.com/you-cant-sacrifice-partition-tolerance/
+Consistency/CAP-Tuning:
+  - https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlConfigConsistency.html
+  - https://blog.imaginea.com/consistency-tuning-in-cassandra/
+  - https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlClientRequestsReadExp.html
+  - https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlAboutDataConsistency.html
+  - https://stackoverflow.com/questions/25043208/read-operation-in-cassandra-at-consistency-level-of-quorum/25043599#25043599
+Distributedness:
+  Write: https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlClientRequestsWrite.html
+  Read: https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlClientRequestsRead.html
+Hinted-Handoff:
+  - http://wiki.apache.org/cassandra/HintedHandoff
+  - https://docs.datastax.com/en/cassandra/3.0/cassandra/operations/opsRepairNodesHintedHandoff.html
+Repair:
+  - https://www.slideshare.net/DataStax/real-world-tales-of-repair-alexander-dejanovski-the-last-pickle-cassandra-summit-2016
+  - https://docs.datastax.com/en/cassandra/3.0/cassandra/operations/opsRepairNodesReadRepair.html
+  - https://www.datastax.com/dev/blog/repair-in-cassandra
+  - https://stackoverflow.com/questions/32340429/what-does-cassandra-nodetool-repair-exactly-do/
+Partition:
+ - https://docs.datastax.com/en/cassandra/3.0/cassandra/architecture/archPartitionerAbout.html
+Secondary-Index:
+  - https://www.datastax.com/wp-content/uploads/2017/01/Native2i-Distributed-Index-3.png
+  - https://pantheon.io/blog/cassandra-scale-problem-secondary-indexes
+  - https://www.datastax.com/dev/blog/cassandra-native-secondary-index-deep-dive
+  - https://docs.datastax.com/en/archived/cql/3.0/cql/ddl/ddl_when_use_index_c.html
+  - https://stackoverflow.com/questions/29692738/how-do-secondary-indexes-work-in-cassandra
+  - https://docs.datastax.com/en/cql/3.3/cql/cql_using/useSecondaryIndex.html
+Config:
+  - http://wiki.apache.org/cassandra/StorageConfiguration
+Data-Modeling:
+  - https://www.guru99.com/cassandra-data-model-rules.html
+  - http://www.datastax.com/dev/blog/cassandra-anti-patterns-queues-and-queue-like-datasets
+  - http://www.cs.wayne.edu/andrey/papers/bigdata2015.pdf
+  - https://www.datastax.com/dev/blog/basic-rules-of-cassandra-data-modeling
+  - https://www.slideshare.net/johnny15676/introduction-to-cql-and-data-modeling
+Overview:
+  - https://www.cl.cam.ac.uk/~ey204/teaching/ACS/R212_2014_2015/papers/lakshman_ladis_2009.pdf
+  - https://docs.datastax.com/en/cassandra/3.0/cassandra/architecture/archIntro.html
+Comparison:
+  - https://pdfs.semanticscholar.org/cc35/3ac11af278aa60569e8093a82663fdb24699.pdf
+Book:
+  - http://dinus.ac.id/private_lib/fahri/MASTERING_APACHE_CASSANDRA.pdf
+Overview:
+  - https://www.scnsoft.com/blog/cassandra-performance
+  - https://www.youtube.com/watch?v=B_HTdrTgGNs
+  - https://dzone.com/articles/introduction-apache-cassandras
+  - http://thelastpickle.com/files/2011-02-07-introduction-to-cassandra/introduction-to-cassandra.pdf
+Glossary: https://docs.datastax.com/en/glossary/doc/glossary/glossaryTOC.html
+CQL:
+  Overview:
+    - https://medium.com/@alexbmeng/cassandra-query-language-cql-vs-sql-7f6ed7706b4c
+    - https://www.datastax.com/dev/blog/whats-new-in-cql-3-0
+  Upsert:
+    - https://stackoverflow.com/questions/4205181/insert-into-a-mysql-table-or-update-if-exists
+  Filtering:
+    - https://stackoverflow.com/questions/28565470/cassandra-primary-key-column-cannot-be-restricted
+    - https://www.datastax.com/dev/blog/a-deep-look-to-the-cql-where-clause
+Primary-Key:
+  - http://thelastpickle.com/blog/2013/01/11/primary-keys-in-cql.html
+  - https://www.datastax.com/dev/blog/the-most-important-thing-to-know-in-cassandra-data-modeling-the-primary-key
+  - https://docs.datastax.com/en/cql/3.3/cql/cql_using/useCompoundPrimaryKeyConcept.html
+  - https://docs.datastax.com/en/cql/3.3/cql/cql_using/useCompositePartitionKeyConcept.html
+Tombstones:
+  - http://thelastpickle.com/blog/2016/07/27/about-deletes-and-tombstones.html
+  - http://thelastpickle.com/blog/2011/05/15/Deletes-and-Tombstones.html
+Pro-Con:
+  - https://www.quora.com/What-are-the-pros-and-cons-of-using-the-Cassandra-database/answer/Russell-Bradberry
+Access Control:
+  - https://www.datastax.com/dev/blog/role-based-access-control-in-cassandra
+Admin:
+  - https://docs.datastax.com/en/cassandra/3.0/cassandra/initialize/initSingleDS.html
+  - https://docs.datastax.com/en/archived/cassandra/2.1/cassandra/operations/ops_tune_jvm_c.html
+Materialized-Views:
+  - https://www.datastax.com/dev/blog/new-in-cassandra-3-0-materialized-views
