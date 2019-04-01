@@ -63,7 +63,68 @@
 
 \section{How to model data (or rather tables)}  % David
 
-\subsection{How secondary indexes work and when to use them}  % Daniel
+\subsection{Secondary index}  % Daniel
+
+\begin{frame}[fragile]{Secondary index - Why}
+  Make it possible to filter by a non primary-key column
+  \begin{semiverbatim}
+  cqlsh:db> CREATE TABLE users (
+  cqlsh:db>  username varchar PRIMARY KEY,
+  cqlsh:db>  age int
+  cqlsh:db> );
+  cqlsh:db> SELECT * FROM users WHERE age = 5;
+  \end{semiverbatim}
+
+  \begin{semiverbatim}
+  cqlsh:db> \textcolor{red}{InvalidRequest: [might filter data]}
+  \end{semiverbatim}
+
+  \begin{semiverbatim}
+  cqlsh:db> CREATE INDEX ON users (age);
+  cqlsh:db> SELECT * FROM users WHERE age = 5;
+
+   username | age
+  ----------+-----
+      timmy |   5
+  \end{semiverbatim}
+  \note[item]{Unpredicatable performance \rightarrow ALLOW FILTERING}
+  \note[item]{Has to go through all nodes and all of their data}
+\end{frame}
+
+\begin{frame}{Secondary index - Implementation}
+  \includegraphics[width=1.0\textwidth]{resources/distributed_index.png}
+  \note[item]{NOT tree, regular table}
+  \note[item]{Distributed, same location as data}
+  \note[item]{Restrict partition key \rightarrow Find node}
+  \note[item]{Heuristic to fetch data from likely nodes in stages}
+\end{frame}
+
+\begin{frame}{Secondary index - Summary}
+  \begin{itemize}
+    \item Distributed table with different primary key
+    \item Located on same node as indexed data
+      \begin{itemize}
+        \item Fast to update
+        \item Paritions as balanced as data
+      \end{itemize}
+    \item Good practice to restrict partition key as well
+    \item Uses heuristic to fetch data from likely nodes $\rightarrow$ \textbf{Use LIMIT}
+  \end{itemize}
+  \note[item]{Partition key \rightarrow only needs to search single node}
+\end{frame}
+
+\begin{frame}{Secondary index - When not to use}
+  Avoid columns
+  \begin{itemize}
+    \item with very high cardinality (e.g. user id)
+    \item with very low cardinality (e.g. country name)
+    \item that are updated/deleted very frequently
+  \end{itemize}
+  \note[item]{Low chance of finding - no partition key \rightarrow queries all nodes}
+  \note[item]{Results in huge index rows}  % TODO: Think about a good explanation
+  \note[item]{Updates have to update two tables}
+  \note[item]{Tombstones are stored in index - hard limit of 100K \rightarrow Query FAILS}
+\end{frame}
 
 \section{Local reads and writes}  % Erik
 \subsection{Write process}
@@ -80,7 +141,7 @@
 
 \section{Set up and must knows}  % Daniel
 
-\begin{frame}[fragile]{Setup - overview}
+\begin{frame}{Setup - overview}
   \begin{itemize}
     \item Get enough nodes ($\geq3$ with $8+$ cores and 32GB RAM, lots of disk)
     % http://cassandra.apache.org/doc/latest/operating/hardware.html
