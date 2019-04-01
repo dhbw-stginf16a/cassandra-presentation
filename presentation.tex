@@ -1,6 +1,7 @@
 \documentclass[10pt]{beamer}
 
 \usepackage{pgfpages}
+
 %\setbeameroption{show notes on second screen}
 
 \usetheme{metropolis}
@@ -78,7 +79,77 @@
 \subsection{How data is read with consensus}
 
 \section{Set up and must knows}  % Daniel
-\subsection{How to set up}
+
+\begin{frame}[fragile]{Setup - overview}
+  \begin{itemize}
+    \item Get enough nodes ($\geq3$ with $8+$ cores and 32GB RAM, lots of disk)
+    % http://cassandra.apache.org/doc/latest/operating/hardware.html
+    \item Set up network (each node with own IP reachable from the others)
+    \item Adapt configuration files
+    \item Open firewall for necessary ports
+    \begin{itemize}
+      \item 7000: node $\leftrightarrow$ node (\lstinline{storage_port})
+      \item 9042: client $\leftrightarrow$ node (\lstinline{native_transport_port})
+    \end{itemize}
+    \item Start seed nodes and then other nodes
+    \item Use \lstinline{nodetool} or \lstinline{cqlsh} to interact with the cluster
+  \end{itemize}
+\note[item]{Number for recommended nodes from Apache}
+\note[item]{ECC RAM and SSD are recommended}
+\note[item]{DataStax recommends keeping data per node near or below 1 TB}
+% https://docs.datastax.com/en/dse-planning/doc/planning/planningHardware.html
+\note[item]{Cloud is perfectly suited for this}
+\note[item]{Two nodes cannot share a broadcast address (e.g. NAT)}
+\end{frame}
+
+\begin{frame}[fragile]{How to set up - Initial node}
+/etc/cassandra/cassandra.yaml
+\begin{semiverbatim}
+# Opens socket on this address
+listen_address: "192.168.0.2"
+# Tells other nodes it's reachable on this address
+broadcast_address: "3.14.1.59"
+
+seed_provider:
+  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+    parameters:
+      - seeds "3.14.1.59"
+
+# Enable client communication
+start_native_transport: true
+\end{semiverbatim}
+\note[item]{Own broadcast address is in seeds \rightarrow Creates own cluster}
+\note[item]{For single node cluster use \lstinline{localhost} everywhere}
+\end{frame}
+
+\begin{frame}[fragile]{How to set up - Further nodes}
+/etc/cassandra/cassandra.yaml
+\begin{semiverbatim}
+# Opens socket on this address
+listen_address: "192.168.1.2"
+# Tells other nodes it's reachable on this address
+broadcast_address: "6.28.3.18"
+
+seed_provider:
+  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+    parameters:
+      - seeds "3.14.1.59"
+
+# Enable client communication
+start_native_transport: true
+\end{semiverbatim}
+\note[item]{Seeds is a comma separated "list" of IPs}
+\note[item]{Three per datacenter recommended}
+\end{frame}
+
+\begin{frame}{More configuration}
+  \begin{itemize}
+    \item Tune JVM parameters like heap size in \lstinline{cassandra-env.sh}
+    \item Increase the number of tokens (virtual nodes) with \lstinline{num_tokens}
+    \item Other performance, architecture or security tuning
+  \end{itemize}
+\end{frame}
+
 \subsection{Things to keep in mind}
 % How to set up as an admin / Must knows
 
