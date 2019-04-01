@@ -56,16 +56,51 @@
   \tableofcontents[pausesections]
 \end{frame}
 
-\section{Properties (overview)}  % David
+\section{Overview}  % David
+
+\begin{frame}{History}
+  \begin{itemize}
+    \item 2008, Developed by Facebook for inbox searching
+    \item 2010, Proper Apache project
+    \item Mainly developed and supported by Datastax
+    \item 2014, 9th most popular database (db-engines.com)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Deployments}
+  Widely used by large companies in big clusters:
+
+  \begin{tabular}{@{}ll}
+    \hline
+    Apple   & >75k Cassandra nodes with 10PB in production \\
+            & Several clusters with 1000+ nodes \\
+    \hline
+    CERN    & Backend storage for ATLAS detector \\
+    \hline
+    Netflix & 2,500 nodes, 420 TB, over 1 trillion requests per day \\
+            & Migrated from Oracle to Cassandra \\
+    \hline
+    eBay    & 6 billion writes and 5 bn reads daily \\
+            & Single Cassandra table of 40TB \\
+    \hline
+  \end{tabular}
+
+% https://cdsweb.cern.ch/record/1432912/files/ATL-DAQ-SLIDE-2012-067.pdf
+% https://www.slideshare.net/adrianco/migrating-netflix-from-oracle-to-global-cassandra/28-Remote_Copies_Cassandra_duplicates_across
+% https://www.slideshare.net/jaykumarpatel/cassandra-at-ebay-13920376
+% https://www.datastax.com/resources/casestudies/ebay
+\end{frame}
+
 \begin{frame}{Properties}
   \begin{itemize}
     \item<1-> Wide Column Store
-    \item<2-> Distributed
-    \item<3-> Masterless
-    \item<4-> Free software project of the Apache Foundation
+    \item<2-> Table-like but not relational
+    \item<3-> Distributed
+    \item<4-> Masterless
+    \item<5-> Free software project of the Apache Foundation
   \end{itemize}
   \note<1>[item]{Later more what "Wide Column Store" means}
-  \note<4>[item]{Originally developed by Facebook in 2008}
+  \note<5>[item]{Originally developed by Facebook in 2008}
 \end{frame}
 
 \section{Wide Column Store}  % David
