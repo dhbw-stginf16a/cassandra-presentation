@@ -55,10 +55,28 @@
 \end{frame}
 
 \section{Properties (overview)}  % David
+\begin{frame}{Properties}
+  \begin{itemize}
+    \item<1-> Wide Column Store
+    \item<2-> Distributed
+    \item<3-> Masterless
+    \item<4-> Free software project of the Apache Foundation
+  \end{itemize}
+  \note<1>[item]{Later more what "Wide Column Store" means}
+  \note<4>[item]{Originally developed by Facebook in 2008}
+\end{frame}
 
 \section{Wide Column Store}  % David
+\begin{frame}{Wide Column Store}
+  % Tabular but not relational
+  % NOTTTTTTT column oriented!!!!!!!!! Store row by row
+  % Columns can be missing in rows and are not stored on disk -> sparse
+  % Like a key-value store where the value can have a subset of a predefined set of columns
+  % Interpretation of the name: A key value store where the value is wide (complex) and consists of columns
+  %   -> ((wide) (column store))
+\end{frame}
 
-\section{Usecases Cassandra is (not) suited for}  % David
+\section{Use-Cases Cassandra is (not) suited for}  % David
 \begin{frame}{Pros and cons}
   \only<1->{
     Use if you want/need
