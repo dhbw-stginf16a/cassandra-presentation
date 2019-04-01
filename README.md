@@ -9,3 +9,7 @@
 ### Final package
 1. `nix-build`
 2. Open `result/presentation.pdf` in your favourite PDF reader
+
+### Tweaks
+- Uncomment `, handout` to combine animations ("overlays") into single slide
+- Unocmment `\setbeameroption{show notes on second screen}` to enable speaker notes

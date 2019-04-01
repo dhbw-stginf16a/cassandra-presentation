@@ -1,4 +1,7 @@
-\documentclass[10pt]{beamer}
+\documentclass[
+  10pt
+%, handout
+]{beamer}
 
 \usepackage{pgfpages}
 
@@ -35,6 +38,8 @@
 
 \setcounter{tocdepth}{1}  % Hide subsections in table of contents
 
+% Content
+
 \title{Introduction to Apache Cassandra}
 \subtitle{}
 \date{April 10, 2019}
@@ -46,7 +51,7 @@
 \maketitle
 
 \begin{frame}{Agenda}
-  \tableofcontents
+  \tableofcontents[pausesections]
 \end{frame}
 
 \section{Properties (overview)}  % David
@@ -55,30 +60,34 @@
 
 \section{Usecases Cassandra is (not) suited for}  % David
 \begin{frame}{Pros and cons}
-  Use if you want/need
-  \begin{itemize}
-    \item Fast writes (high throughput, not latency)
-    \item High availability
-    \item Easy (linear) horizontal scalability
-    \item No master $\rightarrow$ Any node can be read from and written to
-    \item Flexible schema (rows can have missing columns)
-    \item Globally distributed cluster
-  \end{itemize}
-  \note[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
-  \note[item]{Inter-node communication doesn't increase with more nodes}
-  \note[item]{Missing columns aren't even saved to disk (sparse)}
+  \only<1->{
+    Use if you want/need
+    \begin{itemize}
+      \item Fast writes (high throughput, not latency)
+      \item High availability
+      \item Easy (linear) horizontal scalability
+      \item No master $\rightarrow$ Any node can be read from and written to
+      \item Flexible schema (rows can have missing columns)
+      \item Globally distributed cluster
+    \end{itemize}
+    \note[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
+    \note[item]{Inter-node communication doesn't increase with more nodes}
+    \note[item]{Missing columns aren't even saved to disk (sparse)}
+  }
 
-  Don't use if you want/need
-  \begin{itemize}
-    \item Single system instance
-    \item Ever changing queries
-    \item Lots of updates and deletes interspersed with reads
-    \item Transactions (ACID)
-    \item Relations (joins, ...)
-    \item Column aggregation (\lstinline{GROUP BY})
-    \item \lstinline{AUTO INCREMENT}
-  \end{itemize}
-  \note[item]{Cassandra is \textbf{NOT} column oriented}
+  \only<2->{
+    Don't use if you want/need
+    \begin{itemize}
+      \item Single system instance
+      \item Ever changing queries
+      \item Lots of updates and deletes interspersed with reads
+      \item Transactions (ACID)
+      \item Relations (joins, ...)
+      \item Column aggregation (\lstinline{GROUP BY})
+      \item \lstinline{AUTO INCREMENT}
+    \end{itemize}
+    \note[item]{Cassandra is \textbf{NOT} column oriented}
+  }
 \end{frame}
 
 \begin{frame}{Suitable usecases}
@@ -103,27 +112,25 @@
 \begin{frame}[fragile]{Secondary index - Why}
   Make it possible to filter by a non primary-key column
   \begin{semiverbatim}
+  \only<1->{
   cqlsh:db> CREATE TABLE users (
   cqlsh:db>  username varchar PRIMARY KEY,
   cqlsh:db>  age int
   cqlsh:db> );
   cqlsh:db> SELECT * FROM users WHERE age = 5;
-  \end{semiverbatim}
-
-  \begin{semiverbatim}
+  } \only<2->{
   cqlsh:db> \textcolor{red}{InvalidRequest: [might filter data]}
-  \end{semiverbatim}
-
-  \begin{semiverbatim}
+  } \only<3->{
   cqlsh:db> CREATE INDEX ON users (age);
   cqlsh:db> SELECT * FROM users WHERE age = 5;
 
    username | age
   ----------+-----
       timmy |   5
+  }
   \end{semiverbatim}
-  \note[item]{Unpredicatable performance \rightarrow ALLOW FILTERING}
-  \note[item]{Has to go through all nodes and all of their data}
+  \note<1-2>[item]{Unpredicatable performance \rightarrow ALLOW FILTERING}
+  \note<1-2>[item]{Has to go through all nodes and all of their data}
 \end{frame}
 
 \begin{frame}{Secondary index - Implementation}
@@ -136,29 +143,29 @@
 
 \begin{frame}{Secondary index - Summary}
   \begin{itemize}
-    \item Distributed table with different primary key
-    \item Located on same node as indexed data
+    \item<1-> Distributed table with different primary key
+    \item<2-> Located on same node as indexed data
       \begin{itemize}
         \item Fast to update
         \item Paritions as balanced as data
       \end{itemize}
-    \item Good practice to restrict partition key as well
-    \item Uses heuristic to fetch data from likely nodes $\rightarrow$ \textbf{Use LIMIT}
+    \item<3-> Good practice to restrict partition key as well
+    \item<4-> Uses heuristic to fetch data from likely nodes $\rightarrow$ \textbf{Use LIMIT}
   \end{itemize}
-  \note[item]{Partition key \rightarrow only needs to search single node}
+  \note<3>[item]{Partition key \rightarrow only needs to search single node}
 \end{frame}
 
 \begin{frame}{Secondary index - When not to use}
   Avoid columns
   \begin{itemize}
-    \item with very high cardinality (e.g. user id)
-    \item with very low cardinality (e.g. country name)
-    \item that are updated/deleted very frequently
+    \item<1-> with very high cardinality (e.g. user id)
+    \item<2-> with very low cardinality (e.g. country name)
+    \item<3-> that are updated/deleted very frequently
   \end{itemize}
-  \note[item]{Low chance of finding - no partition key \rightarrow queries all nodes}
-  \note[item]{Results in huge index rows}  % TODO: Think about a good explanation
-  \note[item]{Updates have to update two tables}
-  \note[item]{Tombstones are stored in index - hard limit of 100K \rightarrow Query FAILS}
+  \note<1>[item]{Low chance of finding - no partition key \rightarrow queries all nodes}
+  \note<2>[item]{Results in huge index rows}  % TODO: Think about a good explanation
+  \note<3>[item]{Updates have to update two tables}
+  \note<3>[item]{Tombstones are stored in index - hard limit of 100K \rightarrow Query FAILS}
 \end{frame}
 
 \section{Local reads and writes}  % Erik
@@ -178,24 +185,24 @@
 
 \begin{frame}{Setup - overview}
   \begin{itemize}
-    \item Get enough nodes ($\geq3$ with $8+$ cores and 32GB RAM, lots of disk)
+    \item<1-> Get enough nodes ($\geq3$ with $8+$ cores and 32GB RAM, lots of disk)
     % http://cassandra.apache.org/doc/latest/operating/hardware.html
-    \item Set up network (each node with own IP reachable from the others)
-    \item Adapt configuration files
-    \item Open firewall for necessary ports
+    \item<2-> Set up network (each node with own IP reachable from the others)
+    \item<3-> Adapt configuration files
+    \item<4-> Open firewall for necessary ports
     \begin{itemize}
       \item 7000: node $\leftrightarrow$ node (\lstinline{storage_port})
       \item 9042: client $\leftrightarrow$ node (\lstinline{native_transport_port})
     \end{itemize}
-    \item Start seed nodes and then other nodes
-    \item Use \lstinline{nodetool} or \lstinline{cqlsh} to interact with the cluster
+    \item<5-> Start seed nodes and then other nodes
+    \item<6-> Use \lstinline{nodetool} or \lstinline{cqlsh} to interact with the cluster
   \end{itemize}
-  \note[item]{Number for recommended nodes from Apache}
-  \note[item]{ECC RAM and SSD are recommended}
-  \note[item]{DataStax recommends keeping data per node near or below 1 TB}
+  \note<1>[item]{Number for recommended nodes from Apache}
+  \note<1>[item]{ECC RAM and SSD are recommended}
+  \note<1>[item]{DataStax recommends keeping data per node near or below 1 TB}
   % https://docs.datastax.com/en/dse-planning/doc/planning/planningHardware.html
-  \note[item]{Cloud is perfectly suited for this}
-  \note[item]{Two nodes cannot share a broadcast address (e.g. NAT)}
+  \note<2>[item]{Cloud is perfectly suited for this}
+  \note<2>[item]{Two nodes cannot share a broadcast address (e.g. NAT)}
 \end{frame}
 
 \begin{frame}[fragile]{How to set up - Initial node}
@@ -221,18 +228,18 @@ start_native_transport: true
 \begin{frame}[fragile]{How to set up - Further nodes}
   /etc/cassandra/cassandra.yaml
   \begin{semiverbatim}
-  # Opens socket on this address
-  listen_address: "192.168.1.2"
-  # Tells other nodes it's reachable on this address
-  broadcast_address: "6.28.3.18"
+# Opens socket on this address
+listen_address: "192.168.1.2"
+# Tells other nodes it's reachable on this address
+broadcast_address: "6.28.3.18"
 
-  seed_provider:
-    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
-      parameters:
-        - seeds "3.14.1.59"
+seed_provider:
+  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+    parameters:
+      - seeds "3.14.1.59"
 
-  # Enable client communication
-  start_native_transport: true
+# Enable client communication
+start_native_transport: true
   \end{semiverbatim}
   \note[item]{Seeds is a comma separated "list" of IPs}
   \note[item]{Three per datacenter recommended}
@@ -248,17 +255,17 @@ start_native_transport: true
 
 \begin{frame}{Security}
   \begin{itemize}
-    \item Use a firewall to not expose it to the public internet
-    \item Internode communication with TLS
-    \item Client $\leftrightarrow$ Node communication with TLS
-    \item JMX management only on localhost and with auth
-    \item Authentication with password
-    \item Disable default role
-    \item Use roles
+    \item<1-> Use a firewall to not expose it to the public internet
+    \item<2-> Internode communication with TLS
+    \item<2-> Client $\leftrightarrow$ Node communication with TLS
+    \item<3-> JMX management only on localhost and with auth
+    \item<4-> Authentication with password
+    \item<5-> Disable default role
+    \item<5-> Use roles
   \end{itemize}
-  \note[item]{Basic linux due diligence}
-  \note[item]{TLS is always good \rightarrow Encryption, Authenticity}
-  \note[item]{There are no users, only roles (good RBAC model)}
+  \note<1>[item]{Basic linux due diligence}
+  \note<2>[item]{TLS is always good \rightarrow Encryption, Authenticity}
+  \note<5>[item]{There are no users, only roles (good RBAC model)}
 \end{frame}
 
 \subsection{Things to keep in mind}
