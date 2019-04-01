@@ -94,12 +94,12 @@
     \item Start seed nodes and then other nodes
     \item Use \lstinline{nodetool} or \lstinline{cqlsh} to interact with the cluster
   \end{itemize}
-\note[item]{Number for recommended nodes from Apache}
-\note[item]{ECC RAM and SSD are recommended}
-\note[item]{DataStax recommends keeping data per node near or below 1 TB}
-% https://docs.datastax.com/en/dse-planning/doc/planning/planningHardware.html
-\note[item]{Cloud is perfectly suited for this}
-\note[item]{Two nodes cannot share a broadcast address (e.g. NAT)}
+  \note[item]{Number for recommended nodes from Apache}
+  \note[item]{ECC RAM and SSD are recommended}
+  \note[item]{DataStax recommends keeping data per node near or below 1 TB}
+  % https://docs.datastax.com/en/dse-planning/doc/planning/planningHardware.html
+  \note[item]{Cloud is perfectly suited for this}
+  \note[item]{Two nodes cannot share a broadcast address (e.g. NAT)}
 \end{frame}
 
 \begin{frame}[fragile]{How to set up - Initial node}
@@ -123,23 +123,23 @@ start_native_transport: true
 \end{frame}
 
 \begin{frame}[fragile]{How to set up - Further nodes}
-/etc/cassandra/cassandra.yaml
-\begin{semiverbatim}
-# Opens socket on this address
-listen_address: "192.168.1.2"
-# Tells other nodes it's reachable on this address
-broadcast_address: "6.28.3.18"
+  /etc/cassandra/cassandra.yaml
+  \begin{semiverbatim}
+  # Opens socket on this address
+  listen_address: "192.168.1.2"
+  # Tells other nodes it's reachable on this address
+  broadcast_address: "6.28.3.18"
 
-seed_provider:
-  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
-    parameters:
-      - seeds "3.14.1.59"
+  seed_provider:
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+        - seeds "3.14.1.59"
 
-# Enable client communication
-start_native_transport: true
-\end{semiverbatim}
-\note[item]{Seeds is a comma separated "list" of IPs}
-\note[item]{Three per datacenter recommended}
+  # Enable client communication
+  start_native_transport: true
+  \end{semiverbatim}
+  \note[item]{Seeds is a comma separated "list" of IPs}
+  \note[item]{Three per datacenter recommended}
 \end{frame}
 
 \begin{frame}{More configuration}
