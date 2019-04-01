@@ -2,10 +2,10 @@
 
 ## Usage
 ### Continuous development
-1. Install pandoc or `nix-shell`.
+1. Install a LaTeX distribution with pplatex or `nix-shell`.
 2. `make` as often as you like while changing source
-3. Open `presentation.html` in your favourite browser.
+3. Have your favourite PDF reader reload the `presentation.pdf` automatically
 
 ### Final package
 1. `nix-build`
-2. Open `result/presentation.html` in your favourite browser.
+2. Open `result/presentation.pdf` in your favourite PDF reader
