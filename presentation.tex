@@ -154,6 +154,7 @@
 \end{frame}
 
 \begin{frame}{Secondary index - Implementation}
+  % https://www.datastax.com/wp-content/uploads/2017/01/Native2i-Distributed-Index-3.png
   \includegraphics[width=1.0\textwidth]{resources/distributed_index.png}
   \note[item]{NOT tree, regular table}
   \note[item]{Distributed, same location as data}
@@ -197,9 +198,45 @@
 \subsection{What happens when a new node is added}
 \subsection{How the cluster is initially set up}
 
-\section{Distributed writes and reads}  % Daniel
-\subsection{How data is replicated}
-\subsection{How data is read with consensus}
+\section{Distributed writes and reads (CAP)}  % Daniel
+
+\begin{frame}{CAP Theorem}
+  \begin{itemize}
+    \item AP by default
+    \item Can be tuned on a continuum towards CP
+    \item AC not possible  % https://codahale.com/you-cant-sacrifice-partition-tolerance/
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{How data is replicated}
+  % Draw manually if someone's bored
+  % https://docs.datastax.com/en/cassandra/3.0/cassandra/images/arc_write-singleDCConOne.png
+  \includegraphics[width=1.0\textwidth]{resources/distributed_write.png}
+\end{frame}
+
+\begin{frame}{How data is replicated}
+  % Can fail!
+  \begin{enumerate}
+    \item<1-> Client asks any node (becomes coordinator)
+    \item<2-> Coordinator asks responsible nodes (replicas)
+    \item<3-> When more than \lstinline{CL.write} nodes have confirmed write client is given answer
+    \item<4-> Temporarily offline nodes are later reminded with a \textit{hinted-handoff}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{How data is replicated - Node down}
+  % https://docs.datastax.com/en/cassandra/3.0/cassandra/images/dml_hinted_handoff.png
+  \includegraphics[width=1.0\textwidth]{resources/hinted_handoff.png}
+\end{frame}
+
+\begin{frame}{How data is read with consensus}
+  \begin{enumerate}
+    \item<1-> Client asks any node (becomes coordinator)
+    \item<2-> Coordinator asks responsible nodes (replicas)
+    \item<3-> When more than \lstinline{CL.read} nodes have answered client is given answer
+    \item<4-> Nodes that sent outdated data are sent a \lstinline{read_repair}
+  \end{enumerate}
+\end{frame}
 
 \section{Set up and must knows}  % Daniel
 
