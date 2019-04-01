@@ -54,8 +54,43 @@
 \section{Wide Column Store}  % David
 
 \section{Usecases Cassandra is (not) suited for}  % David
-\subsection{Pros and cons}
-\subsection{Suitable usecases}
+\begin{frame}{Pros and cons}
+  Use if you want/need
+  \begin{itemize}
+    \item Fast writes (high throughput, not latency)
+    \item High availability
+    \item Easy (linear) horizontal scalability
+    \item No master $\rightarrow$ Any node can be read from and written to
+    \item Flexible schema (rows can have missing columns)
+    \item Globally distributed cluster
+  \end{itemize}
+  \note[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
+  \note[item]{Inter-node communication doesn't increase with more nodes}
+  \note[item]{Missing columns aren't even saved to disk (sparse)}
+
+  Don't use if you want/need
+  \begin{itemize}
+    \item Single system instance
+    \item Ever changing queries
+    \item Lots of updates and deletes interspersed with reads
+    \item Transactions (ACID)
+    \item Relations (joins, ...)
+    \item Column aggregation (\lstinline{GROUP BY})
+    \item \lstinline{AUTO INCREMENT}
+  \end{itemize}
+  \note[item]{Cassandra is \textbf{NOT} column oriented}
+\end{frame}
+
+\begin{frame}{Suitable usecases}
+  % TODO: Improve this slide - separate abstract and concrete usecases from eachother
+  Concrete use-cases
+  \begin{itemize}
+    \item Recording of financial transaction
+    \item Time series data (logs of any kind, e.g. sensors with huge outputs)
+    \item Tracking status
+    \item Anything append only
+  \end{itemize}
+\end{frame}
 
 \section{How to use CQL}  % Erik
 \subsection{Compare to API (key-value)}
