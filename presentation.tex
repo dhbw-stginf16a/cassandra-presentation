@@ -1,0 +1,80 @@
+\documentclass[10pt]{beamer}
+
+\usepackage{pgfpages}
+%\setbeameroption{show notes on second screen}
+
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\usepackage{graphicx}
+\usepackage{listings}
+
+\usepackage{lmodern}
+
+\usepackage{eurosym}
+\usepackage{amsmath, amssymb}
+\usepackage[binary-units=true]{siunitx}
+\DeclareSIUnit{\EUR}{\text{\euro}}
+
+\usepackage{xcolor}
+\newcommand\crule[3][black]{\textcolor{#1}{\rule{#2}{#3}}}
+\definecolor{aswe-reactive}{cmyk}{1,0.9,0,0}
+\definecolor{aswe-proactive}{cmyk}{0.6,0.9,0,0}
+\definecolor{aswe-preferences}{cmyk}{0,0.75,1,0}
+\definecolor{aswe-data}{cmyk}{0.85,0.1,1,0}
+
+\setcounter{tocdepth}{1}  % Hide subsections in table of contents
+
+\title{ASWE Presentation \#2}
+\subtitle{}
+\date{\today}
+\author{David Marchi, Daniel Schäfer, Erik Zeiske}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Wide Column Store}  % David
+
+\section{Properties (overview)}  % David
+
+\section{What usecases Cassandra is (not) suited for (and pros and cons)}  % David
+
+\section{How to use CQL}  % Erik
+\subsection{Compare to API (key-value)}
+\subsection{Compare to SQL}
+
+\section{How to model data (or rather tables)}  % David
+
+\section{How secondary indexes work and when to use them}  % Daniel
+
+\section{Write process (single node)}  % Erik
+
+\section{Read process (single node)}  % Erik
+
+\section{What happens when a new node is added}  % Daniel
+\subsection{How the cluster is initially set up}
+
+\section{How data is replicated (when everything is already set up)}  % Daniel
+\section{How data is read with consensus}  % Daniel
+\section{How data is stored on disk}  % Erik
+
+\section{How to set up as an admin / Must knows}  % Daniel
+
+\section{Summary/Conclusion}
+
+\end{document}
