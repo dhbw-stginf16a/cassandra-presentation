@@ -33,12 +33,9 @@ let
       buildInputs = [ cmake pkgconfig pcre ];
 
       installPhase = ''
-        mkdir -p $out/bin
-        cp src/pplatex $out/bin/pplatex
+        install -D src/pplatex $out/bin/pplatex
       '';
     };
-
-
 in
   stdenv.mkDerivation rec {
     name = "cassandra-overview";
@@ -53,11 +50,9 @@ in
     preBuild = "make clean";
 
     installPhase = ''
-      mkdir $out
-      mv presentation.pdf $out
+      install -D presentation.pdf $out
     '';
 
-    doCheck = false;
     checkPhase = ''
       function build_error() {
         echo "=====> There have been warnings or errors in the last run, fix them!"
