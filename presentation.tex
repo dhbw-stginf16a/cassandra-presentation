@@ -150,6 +150,21 @@ start_native_transport: true
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Security}
+  \begin{itemize}
+    \item Use a firewall to not expose it to the public internet
+    \item Internode communication with TLS
+    \item Client $\leftrightarrow$ Node communication with TLS
+    \item JMX management only on localhost and with auth
+    \item Authentication with password
+    \item Disable default role
+    \item Use roles
+  \end{itemize}
+  \note[item]{Basic linux due diligence}
+  \note[item]{TLS is always good \rightarrow Encryption, Authenticity}
+  \note[item]{There are no users, only roles (good RBAC model)}
+\end{frame}
+
 \subsection{Things to keep in mind}
 % How to set up as an admin / Must knows
 
