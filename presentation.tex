@@ -186,7 +186,7 @@
       timmy |   5
   }
   \end{semiverbatim}
-  \note<1-2>[item]{Unpredicatable performance \rightarrow ALLOW FILTERING}
+  \note<1-2>[item]{Unpredicatable performance $\rightarrow$ ALLOW FILTERING}
   \note<1-2>[item]{Has to go through all nodes and all of their data}
 \end{frame}
 
@@ -195,7 +195,7 @@
   \includegraphics[width=1.0\textwidth]{resources/distributed_index.png}
   \note[item]{NOT tree, regular table}
   \note[item]{Distributed, same location as data}
-  \note[item]{Restrict partition key \rightarrow Find node}
+  \note[item]{Restrict partition key $\rightarrow$ Find node}
   \note[item]{Heuristic to fetch data from likely nodes in stages}
 \end{frame}
 
@@ -210,7 +210,7 @@
     \item<3-> Good practice to restrict partition key as well
     \item<4-> Uses heuristic to fetch data from likely nodes $\rightarrow$ \textbf{Use LIMIT}
   \end{itemize}
-  \note<3>[item]{Partition key \rightarrow only needs to search single node}
+  \note<3>[item]{Partition key $\rightarrow$ only needs to search single node}
 \end{frame}
 
 \begin{frame}{Secondary index - When not to use}
@@ -220,10 +220,10 @@
     \item<2-> with very low cardinality (e.g. country name)
     \item<3-> that are updated/deleted very frequently
   \end{itemize}
-  \note<1>[item]{Low chance of finding - no partition key \rightarrow queries all nodes}
+  \note<1>[item]{Low chance of finding - no partition key $\rightarrow$ queries all nodes}
   \note<2>[item]{Results in huge index rows}  % TODO: Think about a good explanation
   \note<3>[item]{Updates have to update two tables}
-  \note<3>[item]{Tombstones are stored in index - hard limit of 100K \rightarrow Query FAILS}
+  \note<3>[item]{Tombstones are stored in index - hard limit of 100K $\rightarrow$ Query FAILS}
 \end{frame}
 
 \section{Local reads and writes}  % Erik
@@ -334,7 +334,7 @@ seed_provider:
 # Enable client communication
 start_native_transport: true
 \end{semiverbatim}
-\note[item]{Own broadcast address is in seeds \rightarrow Creates own cluster}
+\note[item]{Own broadcast address is in seeds $\rightarrow$ Creates own cluster}
 \note[item]{For single node cluster use \lstinline{localhost} everywhere}
 \end{frame}
 
@@ -377,7 +377,7 @@ start_native_transport: true
     \item<5-> Use roles
   \end{itemize}
   \note<1>[item]{Basic linux due diligence}
-  \note<2>[item]{TLS is always good \rightarrow Encryption, Authenticity}
+  \note<2>[item]{TLS is always good $\rightarrow$ Encryption, Authenticity}
   \note<5>[item]{There are no users, only roles (good RBAC model)}
 \end{frame}
 
