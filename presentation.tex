@@ -409,4 +409,26 @@ start_native_transport: true
   \end{itemize}
 \end{frame}
 
+\appendix
+
+\begin{frame}{Comparison - Other Wide Column Datastores}
+  \begin{center}
+    \begin{tabular}{l|l}
+      Name & Description \\
+      \hline
+      Amazon DynamoDB & Amazon makes the decisions for you \\
+      % Original developers of DynamoDB created Cassandra
+      % Easy but less tunable
+      % MultiCloud, Partitions, Nodes, Consistency level, ...
+      % Cassandra based off of DynamoDB
+      Google BigTable & Based on GFS (CP), Managed by Google \\
+      % Can be used with Cassandra like architecture (default)
+      ScyllaDB & Cassandra rewrite with better performance \\
+      % C++ and better handling of multiple requests
+      % Not yet all features and not "battle tested"
+      Apache HBase & Similar data model, master/slave $\rightarrow$ CP\\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
 \end{document}
