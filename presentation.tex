@@ -74,9 +74,6 @@
 
   \begin{tabular}{@{}ll}
     \hline
-    Apple   & >75k Cassandra nodes with 10PB in production \\
-            & Several clusters with 1000+ nodes \\
-    \hline
     CERN    & Backend storage for ATLAS detector \\
     \hline
     Netflix & 2,500 nodes, 420 TB, over 1 trillion requests per day \\
@@ -84,6 +81,10 @@
     \hline
     eBay    & 6 billion writes and 5 bn reads daily \\
             & Single Cassandra table of 40TB \\
+    \hline
+    \onslide<2->
+    Apple   & >75k Cassandra nodes with 10PB in production \\
+            & Several clusters with 1000+ nodes \\
     \hline
   \end{tabular}
 
@@ -107,44 +108,54 @@
 
 \section{Wide Column Store}  % David
 \begin{frame}{Wide Column Store}
-  % Tabular but not relational
-  % NOTTTTTTT column oriented!!!!!!!!! Store row by row
-  % Columns can be missing in rows and are not stored on disk -> sparse
-  % Like a key-value store where the value can have a subset of a predefined set of columns
-  % Interpretation of the name: A key value store where the value is wide (complex) and consists of columns
-  %   -> ((wide) (column store))
+  \begin{itemize}
+    \item<1-> Tabular but not relational
+    \item<2-> \textbf{NOT} column oriented! Rows are stored together
+    \item<3-> A row can have missing columns (Not stored on disk $\rightarrow$ sparse)
+    \item<4-> Like key-value store where the value can have a subset of a predefined set of columns
+  \end{itemize}
+
+  \onslide<5->
+  Interpretation of the name: \\
+  Key value store with wide (complex) values that consist of columns
+
+  \note<2>[item]{Unlike Vertica or SAP HANA}
 \end{frame}
 
 \section{Use-Cases Cassandra is (not) suited for}  % David
 \begin{frame}{Pros and cons}
-  \only<1->{
-    Use if you want/need
-    \begin{itemize}
-      \item Fast writes (high throughput, not latency)
-      \item High availability
-      \item Easy (linear) horizontal scalability
-      \item No master $\rightarrow$ Any node can be read from and written to
-      \item Flexible schema (rows can have missing columns)
-      \item Globally distributed cluster
-    \end{itemize}
-    \note[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
-    \note[item]{Inter-node communication doesn't increase with more nodes}
-    \note[item]{Missing columns aren't even saved to disk (sparse)}
-  }
+  \begin{columns}[T]
+    \onslide<+->
+    \begin{column}{0.55\textwidth}
+      Use if you want/need
+      \begin{enumerate}[\textbf{\textcolor{aswe-data}{+}}]
+        \item<+-> Fast writes \\ (high throughput, not latency)
+        \item<+-> High availability
+        \item<+-> Easy (linear) horizontal scalability
+        \item<+-> No master $\rightarrow$ \\ Read from and write to any node
+        \item<+-> Flexible schema \\ (rows can have missing columns)
+        \item<+-> Globally distributed cluster
+      \end{enumerate}
+      \note[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
+      \note[item]{Inter-node communication doesn't increase with more nodes}
+      \note[item]{Missing columns aren't even saved to disk (sparse)}
+    \end{column}
 
-  \only<2->{
-    Don't use if you want/need
-    \begin{itemize}
-      \item Single system instance
-      \item Ever changing queries
-      \item Lots of updates and deletes interspersed with reads
-      \item Transactions (ACID)
-      \item Relations (joins, ...)
-      \item Column aggregation (\lstinline{GROUP BY})
-      \item \lstinline{AUTO INCREMENT}
-    \end{itemize}
-    \note[item]{Cassandra is \textbf{NOT} column oriented}
-  }
+    \onslide<+->
+    \begin{column}{0.45\textwidth}
+      Don't use if you want/need
+      \begin{enumerate}[\textbf{\textcolor{aswe-preferences}{-}}]
+        \item<+-> Single system instance
+        \item<+-> Ever changing queries
+        \item<+-> Lots of updates and deletes interspersed with reads
+        \item<+-> Transactions (ACID)
+        \item<+-> Relations (joins, ...)
+        \item<+-> Column aggregation (\lstinline{GROUP BY})
+        \item<+-> \lstinline{AUTO INCREMENT}
+      \end{enumerate}
+      \note[item]{Cassandra is \textbf{NOT} column oriented}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Suitable usecases}
@@ -169,22 +180,21 @@
 \begin{frame}[fragile]{Secondary index - Why}
   Make it possible to filter by a non primary-key column
   \begin{semiverbatim}
-  \only<1->{
+  \onslide<1->
   cqlsh:db> CREATE TABLE users (
   cqlsh:db>  username varchar PRIMARY KEY,
   cqlsh:db>  age int
   cqlsh:db> );
   cqlsh:db> SELECT * FROM users WHERE age = 5;
-  } \only<2->{
+  \onslide<2->
   cqlsh:db> \textcolor{red}{InvalidRequest: [might filter data]}
-  } \only<3->{
+  \onslide<3->
   cqlsh:db> CREATE INDEX ON users (age);
   cqlsh:db> SELECT * FROM users WHERE age = 5;
 
    username | age
   ----------+-----
       timmy |   5
-  }
   \end{semiverbatim}
   \note<1-2>[item]{Unpredicatable performance $\rightarrow$ ALLOW FILTERING}
   \note<1-2>[item]{Has to go through all nodes and all of their data}
@@ -205,7 +215,7 @@
     \item<2-> Located on same node as indexed data
       \begin{itemize}
         \item Fast to update
-        \item Paritions as balanced as data
+        \item Partitions as balanced as data
       \end{itemize}
     \item<3-> Good practice to restrict partition key as well
     \item<4-> Uses heuristic to fetch data from likely nodes $\rightarrow$ \textbf{Use LIMIT}
@@ -319,8 +329,8 @@
 \end{frame}
 
 \begin{frame}[fragile]{How to set up - Initial node}
-/etc/cassandra/cassandra.yaml
-\begin{semiverbatim}
+  /etc/cassandra/cassandra.yaml
+  \begin{semiverbatim}
 # Opens socket on this address
 listen_address: "192.168.0.2"
 # Tells other nodes it's reachable on this address
@@ -333,18 +343,18 @@ seed_provider:
 
 # Enable client communication
 start_native_transport: true
-\end{semiverbatim}
-\note[item]{Own broadcast address is in seeds $\rightarrow$ Creates own cluster}
-\note[item]{For single node cluster use \lstinline{localhost} everywhere}
+  \end{semiverbatim}
+  \note[item]{Own broadcast address is in seeds $\rightarrow$ Creates own cluster}
+  \note[item]{For single node cluster use \lstinline{localhost} everywhere}
 \end{frame}
 
 \begin{frame}[fragile]{How to set up - Further nodes}
   /etc/cassandra/cassandra.yaml
   \begin{semiverbatim}
 # Opens socket on this address
-listen_address: "192.168.1.2"
+listen_address: "\textbf{192.168.1.2}"
 # Tells other nodes it's reachable on this address
-broadcast_address: "6.28.3.18"
+broadcast_address: "\textbf{6.28.3.18}"
 
 seed_provider:
   - class_name: org.apache.cassandra.locator.SimpleSeedProvider
