@@ -142,6 +142,7 @@
         \item<+-> No master $\rightarrow$ \\ Read from and write to any node
         \item<+-> Flexible schema \\ (rows can have missing columns)
         \item<+-> Globally distributed cluster
+        \item<+-> Query language similar SQL (CQL)
       \end{enumerate}
       \note[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
       \note[item]{Inter-node communication doesn't increase with more nodes}
@@ -160,6 +161,7 @@
         \item<+-> Relations (joins, ...)
         \item<+-> Column aggregation (\lstinline{GROUP BY})
         \item<+-> \lstinline{AUTO INCREMENT}
+        \item<+-> Data validation / constraints (e.g. \lstinline{NULL} constraint, uniqueness)
       \end{enumerate}
       \note[item]{Cassandra is \textbf{NOT} column oriented}
     \end{column}
@@ -212,16 +214,17 @@
 
 \begin{frame}[fragile]{Secondary index - Why}
   Make it possible to filter by a non primary-key column
-  \begin{semiverbatim}
   \onslide<1->
+  \begin{semiverbatim}
+  \onslide<2->
   cqlsh:db> CREATE TABLE users (
   cqlsh:db>  username varchar PRIMARY KEY,
   cqlsh:db>  age int
   cqlsh:db> );
   cqlsh:db> SELECT * FROM users WHERE age = 5;
-  \onslide<2->
+  \onslide<4->
   cqlsh:db> \textcolor{red}{InvalidRequest: [might filter data]}
-  \onslide<3->
+  \onslide<4->
   cqlsh:db> CREATE INDEX ON users (age);
   cqlsh:db> SELECT * FROM users WHERE age = 5;
 
@@ -229,8 +232,8 @@
    \--\--\--\--\--\--\--\--\--+\--\--\--\--
       timmy |   5
   \end{semiverbatim}
-  \note<1-2>[item]{Unpredicatable performance $\rightarrow$ ALLOW FILTERING}
-  \note<1-2>[item]{Has to go through all nodes and all of their data}
+  \note<2-3>[item]{Unpredicatable performance $\rightarrow$ ALLOW FILTERING}
+  \note<2-3>[item]{Has to go through all nodes and all of their data}
 \end{frame}
 
 \begin{frame}{Secondary index - Implementation}
@@ -271,20 +274,44 @@
 
 \section{Local reads and writes}  % Erik
 \begin{frame}{Write process}
-  \includegraphics[width=\textwidth]{resources/local_write.png}
+  \begin{center}
+    \includegraphics[width=0.75\textwidth]{resources/local_write.png}
+    \begin{enumerate}
+      \item<+-> Write to journal on disk
+      \item<+-> Write to memtable in sorted order
+      \item<+-> Flush to disk when memtable is too big
+    \end{itemize}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Read process}
-  \includegraphics[width=\textwidth]{resources/local_read.png}
+  \begin{center}
+    \includegraphics[width=0.75\textwidth]{resources/local_read.png}
+  \end{center}
+
+  Reading
 \end{frame}
 
-\subsection{How data is stored on disk}
+\subsection{How data is stored on disk}  % Erik
+
+\begin{frame}{SSTable}
+\end{frame}
 
 \section{How the cluster works}  % Daniel
 
 \begin{frame}{Token Ring}
   % http://abiasforaction.net/wp-content/uploads/2015/01/Cassandra-Ring.jpg
-  \includegraphics[width=1.0\textwidth]{resources/token_ring.jpg}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+    \includegraphics[width=\columnwidth]{resources/token_ring.jpg}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Num. Tokens $\propto$ Node Performance
+        \item Hash(PartitionKey) \\ $\rightarrow$ Token
+      \end{itemize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Ring with replicas and virtual nodes}
@@ -292,9 +319,25 @@
   \includegraphics[width=1.0\textwidth]{resources/replica_ring.png}
 \end{frame}
 
+\begin{frame}{How the cluster is initially set up}
+\end{frame}
+
+\begin{frame}{What happens when a new node is added}
+  \begin{itemize}
+    \item New node asks any of its seeds for information %  No master
+    \item
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{Rebalancing}
+  \begin{itemize}
+    \item Foo
+    \item bar
+    \item bar
+    \item bar
+  \end{itemize}
   % https://www.datastax.com/wp-content/uploads/2012/02/numofmoves.png
-  \includegraphics[width=1.0\textwidth]{resources/rebalancing.png}
+  \includegraphics[width=\textwidth]{resources/rebalancing.png}
 \end{frame}
 
 \section{Distributed writes and reads (CAP)}  % Daniel
@@ -446,7 +489,7 @@ start_native_transport: true
 
 \begin{frame}{Summary and Conclusion}
   \begin{itemize}
-    \item<+-> Useful for \textit{logging} large amounts of data
+    \item<+-> Useful for \textit{logging} large amounts of data (Big Data)
     \item<+-> Highly available
     \item<+-> Not a replacement for RDBMS
     \item<+-> Sophisticated architecture
