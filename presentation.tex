@@ -312,6 +312,21 @@
   \end{enumerate}
 \end{frame}
 
+\begin{frame}{CAP Theorem - Tunable Variables}
+  \begin{itemize}
+    \item<+-> Consistency: (\lstinline{ANY} $\rightarrow$ \textbf{\lstinline{ONE}} $\rightarrow$ \lstinline{QUORUM} $\rightarrow$ \lstinline{ALL})
+      \begin{itemize}
+        \item \lstinline{CL.Read}
+        \item \lstinline{CL.Write}
+      \end{itemize}
+    \item<+-> Availability:
+      \begin{itemize}
+        \item \lstinline{ReplicationFactor} (1 $\rightarrow$ \textbf{3} $\rightarrow$ nodes)
+        \item More nodes
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
 \section{Set up and must knows}  % Daniel
 
 \begin{frame}{Setup - overview}
