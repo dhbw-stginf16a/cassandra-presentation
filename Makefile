@@ -1,6 +1,6 @@
 .PHONY: clean
 
-presentation.pdf: presentation.tex
+presentation.pdf: presentation.tex resources/*
 	latexmk -pdflatex="pplatex -c pdflatex --" -pdf -interaction=nonstopmode presentation.tex 2>&1 | tee latexmk_log.txt
 
 clean:
