@@ -67,7 +67,7 @@
     \item 2008, Developed by Facebook for inbox searching
     \item 2010, Proper Apache project
     \item Mainly developed and supported by Datastax
-    \item 2014, 9th most popular database (db-engines.com)
+    \item 2019, 11th most popular database (db-engines.com)
   \end{itemize}
 \end{frame}
 
@@ -76,17 +76,17 @@
 
   \begin{tabular}{@{}ll}
     \hline
-    CERN    & Backend storage for ATLAS detector \\
+    CERN    & Storage backend for ATLAS detector \\
     \hline
     Netflix & 2,500 nodes, 420 TB, over 1 trillion requests per day \\
             & Migrated from Oracle to Cassandra \\
     \hline
-    eBay    & 6 billion writes and 5 bn reads daily \\
+    eBay    & 6 billion writes and 5 billion reads daily \\
             & Single Cassandra table of 40TB \\
     \hline
     \onslide<2->
-    Apple   & >75k Cassandra nodes with 10PB in production \\
-            & Several clusters with 1000+ nodes \\
+    Apple   & >75k Cassandra nodes with \textbf{10PB} in production \\
+            & Several clusters with \textbf{1000+ nodes each!} \\
     \hline
   \end{tabular}
 
@@ -121,6 +121,10 @@
   Interpretation of the name: \\
   Key value store with wide (complex) values that consist of columns
 
+  \onslide<6->
+  "Sparse, distributed multi-dimensional sorted map"
+  % Chang, F., Dean, J., Ghemawat, S., Hsieh, et al. (2008). Bigtable: A distributed storage system for structured data. ACM Transactions on Computer Systems (TOCS), 26(2), 4
+
   \note<2>[item]{Unlike Vertica or SAP HANA}
 \end{frame}
 
@@ -129,7 +133,8 @@
   \begin{columns}[T]
     \onslide<+->
     \begin{column}{0.55\textwidth}
-      Use if you want/need
+      \underline{Use if you want/need}
+
       \begin{enumerate}[\textbf{\textcolor{aswe-data}{+}}]
         \item<+-> Fast writes \\ (high throughput, not latency)
         \item<+-> High availability
@@ -145,7 +150,8 @@
 
     \onslide<+->
     \begin{column}{0.45\textwidth}
-      Don't use if you want/need
+      \underline{Don't use if you want/need}
+
       \begin{enumerate}[\textbf{\textcolor{aswe-preferences}{-}}]
         \item<+-> Single system instance
         \item<+-> Ever changing queries
@@ -195,7 +201,7 @@
   cqlsh:db> SELECT * FROM users WHERE age = 5;
 
    username | age
-  ----------+-----
+   \--\--\--\--\--\--\--\--\--+\--\--\--\--
       timmy |   5
   \end{semiverbatim}
   \note<1-2>[item]{Unpredicatable performance $\rightarrow$ ALLOW FILTERING}
@@ -309,7 +315,7 @@
 \section{Set up and must knows}  % Daniel
 
 \begin{frame}{Setup - overview}
-  \begin{itemize}
+  \begin{enumerate}
     \item<1-> Get enough nodes ($\geq3$ with $8+$ cores and 32GB RAM, lots of disk)
     % http://cassandra.apache.org/doc/latest/operating/hardware.html
     \item<2-> Set up network (each node with own IP reachable from the others)
@@ -321,7 +327,7 @@
     \end{itemize}
     \item<5-> Start seed nodes and then other nodes
     \item<6-> Use \lstinline{nodetool} or \lstinline{cqlsh} to interact with the cluster
-  \end{itemize}
+  \end{enumerate}
   \note<1>[item]{Number for recommended nodes from Apache}
   \note<1>[item]{ECC RAM and SSD are recommended}
   \note<1>[item]{DataStax recommends keeping data per node near or below 1 TB}
@@ -335,7 +341,7 @@
   \begin{semiverbatim}
 # Opens socket on this address
 listen_address: "192.168.0.2"
-# Tells other nodes it's reachable on this address
+# Tells other nodes its reachable on this address
 broadcast_address: "3.14.1.59"
 
 seed_provider:
@@ -355,7 +361,7 @@ start_native_transport: true
   \begin{semiverbatim}
 # Opens socket on this address
 listen_address: "\textbf{192.168.1.2}"
-# Tells other nodes it's reachable on this address
+# Tells other nodes its reachable on this address
 broadcast_address: "\textbf{6.28.3.18}"
 
 seed_provider:
