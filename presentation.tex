@@ -180,8 +180,61 @@
 \end{frame}
 
 \section{How to use CQL}  % Erik
-\subsection{Compare to API (key-value)}
-\subsection{Compare to SQL}
+\subsection{API Definition}
+\begin{frame}{Cassandra API}
+  \begin{itemize}
+    \item insert(table, key, rowMutation)
+    \item get(table, key, columnName)
+    \item delete(table, key, columnName)
+  \end{itemize}
+\end{frame}
+
+\subsection{CQL v. SQL}
+\subsubsection{Creating a database(keystore)}
+\begin{frame}[fragile]{Creating a database (keystore)}
+  \begin{lstlisting}[language=SQL]
+/* Create a new keyspace in CQL */
+CREATE KEYSPACE data WITH replication =
+{'class': 'SimpleStrategy', 'replication_factor': 1};
+
+/* Create a new database in SQL */
+CREATE DATABASE data;
+  \end{lstlisting}
+\end{frame}
+
+\subsubsection{Create Table}
+\begin{frame}[fragile]{Create Table}
+% \begin{columns}[T]
+%   \begin{column}
+  \begin{lstlisting}[language=SQL]
+  Will come later thus shouldn't be needed here.
+  \end{lstlisting}
+%   \end{column}
+% \end{columns}
+\end{frame}
+
+\subsubsection{Insert/Update Data}
+\begin{frame}[fragile]{Insert/Update Data}
+  What is the difference of the statements?
+  \begin{lstlisting}[language=SQL]
+/* Inserting Data */
+INSERT INTO Person (lastname, name, email)
+VALUES ("Musterfrau", "Maxi", "maxi@gmail.com");
+
+/* Updating Data */
+UPDATE Person SET email = "maxi@gmail.com"
+WHERE lastname="Musterfrau" AND name = "MAXI";
+  \end{lstlisting}
+  \only<2->{There is no difference. \textbf{Insert = Update}}
+\end{frame}
+
+\subsubsection{Delete Data}
+\begin{frame}[fragile]{Delete Data}
+  \begin{lstlisting}[language=SQL]
+/* Updating Data */
+DELETE FROM Person WHERE lastname="Musterfrau" AND name = "MAXI";
+  \end{lstlisting}
+\end{frame}
 
 \section{How to model data (or rather tables)}  % David
 
