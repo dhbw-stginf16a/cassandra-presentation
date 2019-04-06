@@ -460,30 +460,34 @@ DELETE FROM Person
   \end{columns}
 \end{frame}
 
-\begin{frame}{Ring with replicas and virtual nodes}
-  % https://engineeringblog.yelp.com/images/posts/monitoring-cassandra-at-scale/cassandra_ring.png
-  \includegraphics[width=1.0\textwidth]{resources/replica_ring.png}
-\end{frame}
-
-\begin{frame}{How the cluster is initially set up}
-\end{frame}
-
-\begin{frame}{What happens when a new node is added}
+\begin{frame}{Node joins or leaves ring - Rebalancing}
   \begin{itemize}
-    \item New node asks any of its seeds for information %  No master
-    \item
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Rebalancing}
-  \begin{itemize}
-    \item Foo
-    \item bar
-    \item bar
-    \item bar
+    \item Node joins ring $\rightarrow$ Joins at random location
+    \item Node leaves ring $\rightarrow$ Leaves space on ring
   \end{itemize}
   % https://www.datastax.com/wp-content/uploads/2012/02/numofmoves.png
   \includegraphics[width=\textwidth]{resources/rebalancing.png}
+\end{frame}
+
+\begin{frame}{Ring with replicas and virtual nodes}
+  \begin{columns}
+    \begin{column}{0.7\textwidth}
+      % https://engineeringblog.yelp.com/images/posts/monitoring-cassandra-at-scale/cassandra_ring.png
+      \includegraphics[width=1.0\textwidth]{resources/replica_ring.png}
+    \end{column}
+    \onslide<2->
+    \begin{column}{0.3\textwidth}
+      No
+      \begin{itemize}
+        \item Rebalancing
+        \item Manual token calculation
+      \end{itemize}
+      Less
+      \begin{itemize}
+        \item Data hotspots
+      \end{itemize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \section{Distributed writes and reads (CAP)}  % Daniel
