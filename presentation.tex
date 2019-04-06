@@ -77,7 +77,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Deployments \cite{cern, netflix, ebay, apple}}
+\begin{frame}{Deployments \cite{cern, netflix, ebay, ebay2, apple}}
   Widely used by large companies in big clusters:
 
   \begin{tabular}{@{}ll}
@@ -238,7 +238,7 @@
 
 \section{How to model data (or rather tables)}  % David
 
-\begin{frame}{How to model data - Assumptions}
+\begin{frame}{How to model data - Assumptions \cite{hobbs_datamodeling, guru99_modeling}}
   \begin{itemize}
     \item Writing is cheap
     \item You have a lot of disk space
@@ -281,7 +281,7 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{How to model data - Primary Key}
+\begin{frame}{How to model data - Primary Key \cite{cassandra_oreilly}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_primary_key.jpeg}
   \end{center}
@@ -401,7 +401,7 @@ DELETE FROM Person
   \note<2-3>[item]{Has to go through all nodes and all of their data}
 \end{frame}
 
-\begin{frame}{Secondary index - Implementation}
+\begin{frame}{Secondary index - Implementation \cite{datastax_secondary_index}}
   % https://www.datastax.com/wp-content/uploads/2017/01/Native2i-Distributed-Index-3.png
   \includegraphics[width=1.0\textwidth]{resources/distributed_index.png}
   \note[item]{NOT tree, regular table}
@@ -410,7 +410,7 @@ DELETE FROM Person
   \note[item]{Heuristic to fetch data from likely nodes in stages}
 \end{frame}
 
-\begin{frame}{Secondary index - Summary}
+\begin{frame}{Secondary index - Summary \cite{datastax_secondary_index}}
   \begin{itemize}
     \item<1-> Distributed table with different primary key
     \item<2-> Located on same node as indexed data
@@ -424,7 +424,7 @@ DELETE FROM Person
   \note<3>[item]{Partition key $\rightarrow$ only needs to search single node}
 \end{frame}
 
-\begin{frame}{Secondary index - When not to use}
+\begin{frame}{Secondary index - When not to use \cite{datastax_when_index}}
   Avoid columns
   \begin{itemize}
     \item<1-> with very high cardinality (e.g. user id)
@@ -467,7 +467,7 @@ DELETE FROM Person
 
 \section{How the cluster works}  % Daniel
 
-\begin{frame}{Token Ring}
+\begin{frame}{Token Ring \cite{cassandra_architecture_akhil}}
   % http://abiasforaction.net/wp-content/uploads/2015/01/Cassandra-Ring.jpg
   \begin{columns}
     \begin{column}{0.6\textwidth}
@@ -482,7 +482,7 @@ DELETE FROM Person
   \end{columns}
 \end{frame}
 
-\begin{frame}{Node joins or leaves ring - Rebalancing}
+\begin{frame}{Node joins or leaves ring - Rebalancing \cite{datastax_balancing}}
   \begin{itemize}
     \item Node joins ring $\rightarrow$ Joins at random location
     \item Node leaves ring $\rightarrow$ Leaves space on ring
@@ -491,7 +491,7 @@ DELETE FROM Person
   \includegraphics[width=\textwidth]{resources/rebalancing.png}
 \end{frame}
 
-\begin{frame}{Ring with replicas and virtual nodes}
+\begin{frame}{Ring with replicas and virtual nodes \cite{yelp_balancing}}
   \begin{columns}
     \begin{column}{0.7\textwidth}
       % https://engineeringblog.yelp.com/images/posts/monitoring-cassandra-at-scale/cassandra_ring.png
@@ -522,7 +522,7 @@ DELETE FROM Person
   \end{itemize}
 \end{frame}
 
-\begin{frame}{How data is replicated}
+\begin{frame}{How data is replicated \cite{cassandra_distributed_write}}
   % Draw manually if someone's bored
   % https://docs.datastax.com/en/cassandra/3.0/cassandra/images/arc_write-singleDCConOne.png
   \includegraphics[width=1.0\textwidth]{resources/distributed_write.png}
@@ -538,7 +538,7 @@ DELETE FROM Person
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{How data is replicated - Hinted Handoff}
+\begin{frame}{How data is replicated - Hinted Handoff \cite{hinted_handoff}}
   % https://docs.datastax.com/en/cassandra/3.0/cassandra/images/dml_hinted_handoff.png
   \includegraphics[width=1.0\textwidth]{resources/hinted_handoff.png}
 \end{frame}
