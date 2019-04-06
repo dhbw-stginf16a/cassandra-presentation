@@ -99,8 +99,7 @@
 \begin{frame}{Properties}
   \begin{itemize}
     \item<1-> Wide Column Store
-    \item<2-> Distributed Data Store
-    \item<3-> Distributed and Decentralized
+    \item<2-> Distributed and masterless Data Store
     \item<4-> Elastic scalability
     \item<5-> High Availability and Fault tolerance
     \item<6-> Tuneable Consistency
@@ -135,6 +134,7 @@
   % Chang, F., Dean, J., Ghemawat, S., Hsieh, et al. (2008). Bigtable: A distributed storage system for structured data. ACM Transactions on Computer Systems (TOCS), 26(2), 4
 
   \note<2>[item]{Unlike Vertica or SAP HANA}
+  \note<6>[item]{Quote from original paper}
 \end{frame}
 
 \begin{frame}{Wide Column Store}
@@ -190,18 +190,20 @@
         \item<3-> "high performance at high write volumes with many concurrent client threads"
       \end{itemize}
     \item<4-> Geographical distribution
+    % TODO: Think about this
     \item<5-> Evolving applications
  \end{itemize}
 
-    \note<1>[item]{ingenuety, architecture and featureset limited when used as single-node}
-    \note<1>[item]{sevel nodes? -> might be a fit}
-    \note<1>[item]{dozen of nodes? -> great fit}
-    \note<2>[item]{consider read / write ratio}
-    \note<2>[item]{as mentioned, cassandra optimized for write throughput}
-    \note<2>[item]{not many updates / data changes, slows read down}
-    \note<3>[item]{configure to replicate across multiple data centers}
-    \note<3>[item]{gobally deployed application}
-    \note<3>[item]{flexible schema, database evolves with application}
+    % TODO fix numbering
+    \note<1>[item]{Ingenuiety, architecture and featureset limited when used as single-node}
+    \note<1>[item]{Several nodes? -> might be a fit}
+    \note<1>[item]{Dozen of nodes? -> great fit}
+    \note<2>[item]{Consider read / write ratio}
+    \note<2>[item]{As mentioned, cassandra optimized for write throughput}
+    \note<2>[item]{Not many updates / data changes, slows read down}
+    \note<3>[item]{Configure to replicate across multiple data centers}
+    \note<3>[item]{Globally deployed application}
+    \note<3>[item]{Flexible schema, database evolves with application}
 
 \end{frame}
 
@@ -210,14 +212,14 @@
   \begin{itemize}
     \item Recording of transactions
       \begin{itemize}
-        \item shopping chart
-        \item user transactions
+        \item Shopping cart
+        \item User transactions
       \end{itemize}
-    \item Time ser\item shopping cardinalityies data
+    \item Time series data
       \begin{itemize}
-        \item logs of any kind, e.g. sensors with huge outputs
+        \item Logs of any kind, e.g. sensors with huge outputs
         \item IoT
-        \item user / behaviour analytics
+        \item User / Behavioural analytics
       \end{itemize}
     \item \textbf{Social media input and analysis}
   \end{itemize}
@@ -227,7 +229,44 @@
 \end{frame}
 
 \section{How to use CQL}  % Erik
+
 \subsection{API Definition}
+\subsection{CQL v. SQL}
+\subsubsection{Creating a database(keystore)}
+\begin{frame}[fragile]{Creating a database (keystore)}
+  \begin{semiverbatim}
+/* Create a new keyspace in CQL */
+CREATE KEYSPACE data WITH replication =
+\{'class': 'SimpleStrategy', 'replication_factor': 1\};
+
+/* Create a new database in SQL */
+CREATE DATABASE data;
+  \end{semiverbatim}
+\end{frame}
+
+\subsubsection{Create Table}
+
+\begin{frame}[fragile]{Create Table}
+  \begin{semiverbatim}
+CREATE TABLE groups (
+   group_location varchar,
+   added_date date,
+   username varchar,
+   PRIMARY KEY (...)
+);
+  \end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Primary Key}
+  \begin{semiverbatim}
+      parition key       clustering key  clustering key
+       |       |                |            |
+((groupname, group_location), added_date, username)
+                                |
+                            ORDER BY
+  \end{semiverbatim}
+\end{frame}
+
 \begin{frame}{Cassandra API}
   \begin{itemize}
     \item insert(table, key, rowMutation) \\
@@ -239,51 +278,28 @@
   \end{itemize}
 \end{frame}
 
-\subsection{CQL v. SQL}
-\subsubsection{Creating a database(keystore)}
-\begin{frame}[fragile]{Creating a database (keystore)}
-  \begin{lstlisting}[language=SQL]
-/* Create a new keyspace in CQL */
-CREATE KEYSPACE data WITH replication =
-{'class': 'SimpleStrategy', 'replication_factor': 1};
-
-/* Create a new database in SQL */
-CREATE DATABASE data;
-  \end{lstlisting}
-\end{frame}
-
-\subsubsection{Create Table}
-\begin{frame}[fragile]{Create Table}
-% \begin{columns}[T]
-%   \begin{column}
-  \begin{lstlisting}[language=SQL]
-  Will come later thus shouldn't be needed here.
-  \end{lstlisting}
-%   \end{column}
-% \end{columns}
-\end{frame}
-
 \subsubsection{Insert/Update Data}
 \begin{frame}[fragile]{Insert/Update Data}
   What is the difference of the statements?
-  \begin{lstlisting}[language=SQL]
+  \begin{semiverbatim}
 /* Inserting Data */
 INSERT INTO Person (lastname, name, email)
-VALUES ("Musterfrau", "Maxi", "maxi@gmail.com");
+VALUES ('Musterfrau', 'Maxi', 'maxi@gmail.com');
 
 /* Updating Data */
-UPDATE Person SET email = "maxi@gmail.com"
-WHERE lastname="Musterfrau" AND name = "MAXI";
-  \end{lstlisting}
+UPDATE Person SET email = 'maxi@gmail.com'
+WHERE lastname='Musterfrau' AND name = 'MAXI';
+  \end{semiverbatim}
   \only<2->{There is no difference. \textbf{Insert = Update}}
 \end{frame}
 
 \subsubsection{Delete Data}
 \begin{frame}[fragile]{Delete Data}
-  \begin{lstlisting}[language=SQL]
-/* Updating Data */
-DELETE FROM Person WHERE lastname="Musterfrau" AND name = "MAXI";
-  \end{lstlisting}
+  \begin{semiverbatim}
+/* Deleting Data */
+DELETE FROM Person
+  WHERE lastname='Musterfrau' AND name = 'Maxi';
+  \end{semiverbatim}
 \end{frame}
 
 \section{How to model data (or rather tables)}  % David
@@ -296,14 +312,13 @@ DELETE FROM Person WHERE lastname="Musterfrau" AND name = "MAXI";
   \end{itemize}
 \end{frame}
 
-\begin{frame}{How to model data - Contraints}
+\begin{frame}{How to model data - Constraints}
   \begin{itemize}
-    \item no joins
-    \item no referential integrity
-    \item denormalization
-    \item query-first desig
-    \item designing for storage optimization
-    \item sorting, design decision
+    \item<+-> No joins
+    \item<+-> No referential integrity
+    \item<+-> Denormalization
+    \item<+-> Query-first design
+    \item<+-> Sorting, design decision
   \end{itemize}
   % TODO - extensive notes
 \end{frame}
@@ -320,7 +335,7 @@ DELETE FROM Person WHERE lastname="Musterfrau" AND name = "MAXI";
   \includegraphics[width=0.75\columnwidth]{resources/model_example_queries_step2.png}
 \end{frame}
 
-\begin{frame}{How to model data - Example}
+\begin{frame}{How to model data - Chebotko Diagram}
   \includegraphics[width=0.75\columnwidth]{resources/model_example_chebotko_step3.png}
 \end{frame}
 
@@ -433,10 +448,10 @@ DELETE FROM Person WHERE lastname="Musterfrau" AND name = "MAXI";
 \begin{frame}{Token Ring}
   % http://abiasforaction.net/wp-content/uploads/2015/01/Cassandra-Ring.jpg
   \begin{columns}
-    \begin{column}{0.5\textwidth}
+    \begin{column}{0.6\textwidth}
     \includegraphics[width=\columnwidth]{resources/token_ring.jpg}
     \end{column}
-    \begin{column}{0.5\textwidth}
+    \begin{column}{0.4\textwidth}
       \begin{itemize}
         \item Num. Tokens $\propto$ Node Performance
         \item Hash(PartitionKey) \\ $\rightarrow$ Token
@@ -497,7 +512,7 @@ DELETE FROM Person WHERE lastname="Musterfrau" AND name = "MAXI";
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{How data is replicated - Node down}
+\begin{frame}{How data is replicated - Hinted Handoff}
   % https://docs.datastax.com/en/cassandra/3.0/cassandra/images/dml_hinted_handoff.png
   \includegraphics[width=1.0\textwidth]{resources/hinted_handoff.png}
 \end{frame}
@@ -526,7 +541,7 @@ DELETE FROM Person WHERE lastname="Musterfrau" AND name = "MAXI";
   \end{itemize}
 \end{frame}
 
-\section{Set up and must knows}  % Daniel
+\section{Setup}  % Daniel
 
 \begin{frame}{Setup - overview}
   \begin{enumerate}
