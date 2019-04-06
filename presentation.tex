@@ -235,7 +235,7 @@
 \subsection{API Definition}
 \subsection{CQL v. SQL}
 \subsubsection{Creating a database(keystore)}
-\begin{frame}[fragile]{Creating a database (keystore)}
+\begin{frame}[fragile]{Creating a database (keystore) \cite{cqlAlexMeng}} % https://medium.com/@alexbmeng/cassandra-query-language-cql-vs-sql-7f6ed7706b4c
   \begin{semiverbatim}
 /* Create a new keyspace in CQL */
 CREATE KEYSPACE data WITH replication =
@@ -248,7 +248,7 @@ CREATE DATABASE data;
 
 \subsubsection{Create Table}
 
-\begin{frame}[fragile]{Create Table}
+\begin{frame}[fragile]{Create Table \cite{cqlAlexMeng}}
   \begin{semiverbatim}
 CREATE TABLE groups (
    group_location varchar,
@@ -259,7 +259,7 @@ CREATE TABLE groups (
   \end{semiverbatim}
 \end{frame}
 
-\begin{frame}[fragile]{Primary Key}
+\begin{frame}[fragile]{Primary Key \cite{cqlPrimaryKeyDefinition}}
   \begin{semiverbatim}
       parition key       clustering key  clustering key
        |       |                |            |
@@ -269,7 +269,7 @@ CREATE TABLE groups (
   \end{semiverbatim}
 \end{frame}
 
-\begin{frame}{Cassandra API}
+\begin{frame}{Cassandra API \cite{cassandra_paper}}
   \begin{itemize}
     \item insert(table, key, rowMutation) \\
           \only<2->{\lstinline{UPDATE table SET rowmutation WHERE key}}
