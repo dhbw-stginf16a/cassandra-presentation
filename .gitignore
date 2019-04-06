@@ -13,5 +13,9 @@ result
 *.toc
 *.vrb
 *.synctex.gz
+*.bcf
+*.blg
+*.run.xml
+*.bbl
 
 latexmk_log.txt
