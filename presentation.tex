@@ -183,9 +183,12 @@
 \subsection{API Definition}
 \begin{frame}{Cassandra API}
   \begin{itemize}
-    \item insert(table, key, rowMutation)
-    \item get(table, key, columnName)
-    \item delete(table, key, columnName)
+    \item insert(table, key, rowMutation) \\
+          \only<2->{\lstinline{UPDATE table SET rowmutation WHERE key}}
+    \item get(table, key, columnName) \\
+          \only<3->{\lstinline{SELECT columnName FROM table WHERE primaryKey = key}}
+    \item delete(table, key, columnName) \\
+          \only<4->{\lstinline{DELETE columnName FROM table WHERE key}}
   \end{itemize}
 \end{frame}
 
