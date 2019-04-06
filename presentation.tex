@@ -64,7 +64,7 @@
 
 \section{Overview}  % David
 
-\begin{frame}{History}
+\begin{frame}{History \cite{cassandra_paper, cassandra_apache, db_engines}}
   \begin{itemize}
     \item 2008, Developed by Facebook for inbox searching
     \item 2010, Proper Apache project
@@ -73,7 +73,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Deployments}
+\begin{frame}{Deployments \cite{cern, netflix, ebay, apple}}
   Widely used by large companies in big clusters:
 
   \begin{tabular}{@{}ll}
@@ -132,7 +132,7 @@
   Key value store with wide (complex) values that consist of columns
 
   \onslide<6->
-  "Sparse, distributed multi-dimensional sorted map"
+  "Sparse, distributed multi-dimensional sorted map" \cite{cassandra_paper}
   % Chang, F., Dean, J., Ghemawat, S., Hsieh, et al. (2008). Bigtable: A distributed storage system for structured data. ACM Transactions on Computer Systems (TOCS), 26(2), 4
 
   \note<2>[item]{Unlike Vertica or SAP HANA}
@@ -230,6 +230,71 @@
 
 \end{frame}
 
+\section{How to model data (or rather tables)}  % David
+
+\begin{frame}{How to model data - Assumptions}
+  \begin{itemize}
+    \item Writing is cheap
+    \item You have a lot of disk space
+    \item Inter-node communication is expensive
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{How to model data - Constraints}
+  \begin{itemize}
+    \item<+-> No joins
+    \item<+-> No referential integrity
+    \item<+-> Denormalization
+    \item<+-> Query-first design
+    \item<+-> Sorting, design decision
+  \end{itemize}
+  % TODO - extensive notes
+\end{frame}
+
+\begin{frame}{How to model data - ERM \cite{cassandra_oreilly}}
+  \begin{center}
+    \includegraphics[width=0.75\columnwidth]{resources/model_example_entity_relation_step0.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{How to model data - Tables \cite{cassandra_oreilly}}
+  \begin{center}
+    \includegraphics[width=0.75\columnwidth]{resources/model_example_rdbms_step1.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{How to model data - Queries \cite{cassandra_oreilly}}
+  \begin{center}
+    \includegraphics[width=0.75\columnwidth]{resources/model_example_queries_step2.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{How to model data - Chebotko Diagram \cite{cassandra_oreilly}}
+  \begin{center}
+    \includegraphics[width=0.75\columnwidth]{resources/model_example_chebotko_step3.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{How to model data - Primary Key}
+  \begin{center}
+    \includegraphics[width=0.75\columnwidth]{resources/model_example_primary_key.jpeg}
+  \end{center}
+\end{frame}
+
+% Rework slide / make a summary, point out differences
+\begin{frame}{How to model data}
+  \begin{itemize}
+    \item Denormalize!
+    % Writing and reading will be cheap - there are no joins
+    \item Choose a good partition key
+      \begin{itemize}
+        \item Spread data evenly
+        \item Optimize queries (tables) to read from few partitions
+      \end{itemize}
+    \item Model table to fit your queries
+  \end{itemize}
+\end{frame}
+
 \section{How to use CQL}  % Erik
 
 \subsection{API Definition}
@@ -302,57 +367,6 @@ WHERE lastname='Musterfrau' AND name = 'MAXI';
 DELETE FROM Person
   WHERE lastname='Musterfrau' AND name = 'Maxi';
   \end{semiverbatim}
-\end{frame}
-
-\section{How to model data (or rather tables)}  % David
-
-\begin{frame}{How to model data - Assumptions}
-  \begin{itemize}
-    \item Writing is cheap
-    \item You have a lot of disk space
-    \item Inter-node communication is expensive
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{How to model data - Constraints}
-  \begin{itemize}
-    \item<+-> No joins
-    \item<+-> No referential integrity
-    \item<+-> Denormalization
-    \item<+-> Query-first design
-    \item<+-> Sorting, design decision
-  \end{itemize}
-  % TODO - extensive notes
-\end{frame}
-
-\begin{frame}{How to model data - Example}
-  \includegraphics[width=0.75\columnwidth]{resources/model_example_entity_relation_step0.png}
-\end{frame}
-
-\begin{frame}{How to model data - Example}
-  \includegraphics[width=0.75\columnwidth]{resources/model_example_rdbms_step1.png}
-\end{frame}
-
-\begin{frame}{How to model data - Example}
-  \includegraphics[width=0.75\columnwidth]{resources/model_example_queries_step2.png}
-\end{frame}
-
-\begin{frame}{How to model data - Chebotko Diagram}
-  \includegraphics[width=0.75\columnwidth]{resources/model_example_chebotko_step3.png}
-\end{frame}
-
-% Rework slide / make a summary, point out differences
-\begin{frame}{How to model data}
-  \begin{itemize}
-    \item Denormalize!
-    % Writing and reading will be cheap - there are no joins
-    \item Choose a good partition key
-      \begin{itemize}
-        \item Spread data evenly
-        \item Optimize queries (tables) to read from few partitions
-      \end{itemize}
-    \item Model table to fit your queries
-  \end{itemize}
 \end{frame}
 
 \subsection{Secondary index}  % Daniel
