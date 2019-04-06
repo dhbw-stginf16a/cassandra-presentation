@@ -45,6 +45,8 @@
 \setcounter{tocdepth}{1}  % Hide subsections in table of contents
 
 % Content
+\usepackage[style=numeric,backend=biber]{biblatex}
+\addbibresource{presentation.bib}
 
 \title{Introduction to Apache Cassandra}
 \subtitle{}
@@ -683,4 +685,7 @@ start_native_transport: true
   \end{center}
 \end{frame}
 
+\begin{frame}
+    \printbibliography
+\end{frame}
 \end{document}

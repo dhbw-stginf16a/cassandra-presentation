@@ -14,6 +14,13 @@ let
       pgfopts
       pgfplots
 
+      biber
+      biblatex
+      biblatex-apa
+      csquotes
+      logreq
+      xstring
+
       siunitx
       ;
   };
