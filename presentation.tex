@@ -5,14 +5,19 @@
 
 \usepackage{pgfpages}
 
+% Use T1 Font encoding to support more glyphs
 \usepackage[T1]{fontenc}
 
 %\setbeameroption{show notes on second screen}
 
+% Number sections in table of contents
 \setbeamertemplate{section in toc}[sections numbered]
+% Hide subsections in table of contents
+\setcounter{tocdepth}{1}
 
+% Use metropolis beamer theme
 \usetheme[
-  numbering=fraction
+  numbering=fraction  % Page numbering like 3/10
 ]{metropolis}
 \usepackage{appendixnumberbeamer}
 
@@ -41,8 +46,6 @@
 \definecolor{aswe-proactive}{cmyk}{0.6,0.9,0,0}
 \definecolor{aswe-preferences}{cmyk}{0,0.75,1,0}
 \definecolor{aswe-data}{cmyk}{0.85,0.1,1,0}
-
-\setcounter{tocdepth}{1}  % Hide subsections in table of contents
 
 % Content
 \usepackage[style=numeric,backend=biber]{biblatex}
