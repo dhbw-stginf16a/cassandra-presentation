@@ -47,6 +47,10 @@
 % Content
 \usepackage[style=numeric,backend=biber]{biblatex}
 \addbibresource{presentation.bib}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\setbeamertemplate{bibliography entry title}{}
+\setbeamertemplate{bibliography entry location}{}
+\setbeamertemplate{bibliography entry note}{}
 
 \title{Introduction to Apache Cassandra}
 \subtitle{}
@@ -701,7 +705,7 @@ start_native_transport: true
   \end{center}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[allowframebreaks]
     \printbibliography
 \end{frame}
 \end{document}
