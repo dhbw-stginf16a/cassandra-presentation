@@ -248,7 +248,7 @@ CREATE DATABASE data;
 
 \subsubsection{Create Table}
 
-\begin{frame}[fragile]{Create Table \cite{cqlAlexMeng}}
+\begin{frame}[fragile]{Create Table \cite{cqlAlexMeng, newInCQL3}}
   \begin{semiverbatim}
 CREATE TABLE groups (
    group_location varchar,
@@ -281,7 +281,7 @@ CREATE TABLE groups (
 \end{frame}
 
 \subsubsection{Insert/Update Data}
-\begin{frame}[fragile]{Insert/Update Data}
+\begin{frame}[fragile]{Insert/Update Data \cite{cqlAlexMeng, newInCQL3}} % https://www.datastax.com/dev/blog/whats-new-in-cql-3-0
   What is the difference of the statements?
   \begin{semiverbatim}
 /* Inserting Data */
@@ -296,7 +296,7 @@ WHERE lastname='Musterfrau' AND name = 'MAXI';
 \end{frame}
 
 \subsubsection{Delete Data}
-\begin{frame}[fragile]{Delete Data}
+\begin{frame}[fragile]{Delete Data \cite{cqlAlexMeng}}
   \begin{semiverbatim}
 /* Deleting Data */
 DELETE FROM Person
@@ -418,7 +418,7 @@ DELETE FROM Person
 \end{frame}
 
 \section{Local reads and writes}  % Erik
-\begin{frame}{Write process}
+\begin{frame}{Write process \cite{datastaxWriteData}}
   \begin{center}
     \includegraphics[width=0.75\textwidth]{resources/local_write.png}
     \begin{enumerate}
@@ -429,7 +429,7 @@ DELETE FROM Person
   \end{center}
 \end{frame}
 
-\begin{frame}{Read process}
+\begin{frame}{Read process \cite{datastaxReadData}}
   \begin{center}
     \includegraphics[width=0.75\textwidth]{resources/local_read.png}
   \end{center}
