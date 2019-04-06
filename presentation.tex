@@ -158,7 +158,7 @@
         \item<+-> Easy (linear) horizontal scalability
         \item<+-> No master $\rightarrow$ \\ Read from and write to any node
         \item<+-> Flexible schema \\ (rows can have missing columns)
-        \item<+-> Globally distributed cluster
+        \item<+-> Globally distributed cluster (e.g. multicloud)
         \item<+-> Query language similar SQL (CQL)
       \end{enumerate}
       \note[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
@@ -195,7 +195,7 @@
       \end{itemize}
     \item<4-> Geographical distribution
     % TODO: Think about this
-    \item<5-> Evolving applications
+    \item<5-> Evolving applications (Add/Remove columns)
  \end{itemize}
 
     % TODO fix numbering
@@ -223,7 +223,7 @@
       \begin{itemize}
         \item Logs of any kind, e.g. sensors with huge outputs
         \item IoT
-        \item User / Behavioural analytics
+        \item User / Behavioral analytics
       \end{itemize}
     \item \textbf{Social media input and analysis}
   \end{itemize}
@@ -306,7 +306,7 @@
   \begin{semiverbatim}
 /* Create a new keyspace in CQL */
 CREATE KEYSPACE data WITH replication =
-\{'class': 'SimpleStrategy', 'replication_factor': 1\};
+\{'class': 'SimpleStrategy', 'replication_factor': 3\};
 
 /* Create a new database in SQL */
 CREATE DATABASE data;
@@ -328,7 +328,7 @@ CREATE TABLE groups (
 
 \begin{frame}[fragile]{Primary Key \cite{cqlPrimaryKeyDefinition}}
   \begin{semiverbatim}
-      parition key       clustering key  clustering key
+      partition key       clustering key  clustering key
        |       |                |            |
 ((groupname, group_location), added_date, username)
                                 |
@@ -660,9 +660,9 @@ start_native_transport: true
     \item<+-> Useful for \textit{logging} large amounts of data (Big Data)
     \item<+-> Highly available
     \item<+-> Not a replacement for RDBMS
+    \item<+-> Fantastic for the use-cases its designed for
     \item<+-> Sophisticated architecture
     \item<+-> Battle tested
-    \item<+-> Fantastic for the use-cases its designed for
   \end{itemize}
 \end{frame}
 
