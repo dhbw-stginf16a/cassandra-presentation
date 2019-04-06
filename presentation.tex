@@ -639,21 +639,6 @@ start_native_transport: true
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Security}
-  \begin{itemize}
-    \item<1-> Use a firewall to not expose it to the public internet
-    \item<2-> Internode communication with TLS
-    \item<2-> Client $\leftrightarrow$ Node communication with TLS
-    \item<3-> JMX management only on localhost and with auth
-    \item<4-> Authentication with password
-    \item<5-> Disable default role
-    \item<5-> Use roles
-  \end{itemize}
-  \note<1>[item]{Basic linux due diligence}
-  \note<2>[item]{TLS is always good $\rightarrow$ Encryption, Authenticity}
-  \note<5>[item]{There are no users, only roles (good RBAC model)}
-\end{frame}
-
 %\subsection{Things to keep in mind}
 % How to set up as an admin / Must knows
 
@@ -704,6 +689,22 @@ start_native_transport: true
     \end{tabular}
   \end{center}
 \end{frame}
+
+\begin{frame}{Security}
+  \begin{itemize}
+    \item<1-> Use a firewall to not expose it to the public internet
+    \item<2-> Internode communication with TLS
+    \item<2-> Client $\leftrightarrow$ Node communication with TLS
+    \item<3-> JMX management only on localhost and with auth
+    \item<4-> Authentication with password
+    \item<5-> Disable default role
+    \item<5-> Use roles
+  \end{itemize}
+  \note<1>[item]{Basic linux due diligence}
+  \note<2>[item]{TLS is always good $\rightarrow$ Encryption, Authenticity}
+  \note<5>[item]{There are no users, only roles (good RBAC model)}
+\end{frame}
+
 
 \begin{frame}[allowframebreaks]
     \printbibliography
