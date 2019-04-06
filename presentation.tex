@@ -99,13 +99,22 @@
 \begin{frame}{Properties}
   \begin{itemize}
     \item<1-> Wide Column Store
-    \item<2-> Table-like but not relational
-    \item<3-> Distributed
-    \item<4-> Masterless
-    \item<5-> Free software project of the Apache Foundation
+    \item<2-> Distributed Data Store
+    \item<3-> Distributed and Decentralized
+    \item<4-> Elastic scalability
+    \item<5-> High Availability and Fault tolerance
+    \item<6-> Tuneable Consistency
+    \item<7-> Free software project of the Apache Foundation
+
   \end{itemize}
-  \note<1>[item]{Later more what "Wide Column Store" means}
-  \note<5>[item]{Originally developed by Facebook in 2008}
+  \note<1>[item]{table-like but not relational; later more}
+  \note<2>[item]{large data, distributed on commodity hardware}
+  \note<3>[item]{masterless, no single point of failure}
+  \note<4>[item]{add another machine, cassandra will adapt it}
+  \note<5>[item]{Replace failed nodes with not downtime}
+  \note<5>[item]{Replicate data to multiple data centers}
+  \note<6>[item]{reffered to as "eventual conistent"}
+  \note<7>[item]{Originally developed by Facebook in 2008, co-author Amazon DynamoDB}
 \end{frame}
 
 \section{Wide Column Store}  % David
@@ -126,6 +135,10 @@
   % Chang, F., Dean, J., Ghemawat, S., Hsieh, et al. (2008). Bigtable: A distributed storage system for structured data. ACM Transactions on Computer Systems (TOCS), 26(2), 4
 
   \note<2>[item]{Unlike Vertica or SAP HANA}
+\end{frame}
+
+\begin{frame}{Wide Column Store}
+  \includegraphics[width=0.75\columnwidth]{resources/wide_column_store.png}
 \end{frame}
 
 \section{Use-Cases Cassandra is (not) suited for}  % David
@@ -168,15 +181,49 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{General UseCase Conditions}
+%Abstract UseCases
+ \begin{itemize}
+    \item<1-> Large Deployments
+    \item<2-> Lots of writes, like a lot a lot
+      \begin{itemize}
+        \item<3-> "high performance at high write volumes with many concurrent client threads"
+      \end{itemize}
+    \item<4-> Geographical distribution
+    \item<5-> Evolving applications
+ \end{itemize}
+
+    \note<1>[item]{ingenuety, architecture and featureset limited when used as single-node}
+    \note<1>[item]{sevel nodes? -> might be a fit}
+    \note<1>[item]{dozen of nodes? -> great fit}
+    \note<2>[item]{consider read / write ratio}
+    \note<2>[item]{as mentioned, cassandra optimized for write throughput}
+    \note<2>[item]{not many updates / data changes, slows read down}
+    \note<3>[item]{configure to replicate across multiple data centers}
+    \note<3>[item]{gobally deployed application}
+    \note<3>[item]{flexible schema, database evolves with application}
+
+\end{frame}
+
 \begin{frame}{Suitable usecases}
-  % TODO: Improve this slide - separate abstract and concrete usecases from eachother
   Concrete use-cases
   \begin{itemize}
-    \item Recording of financial transaction
-    \item Time series data (logs of any kind, e.g. sensors with huge outputs)
-    \item Tracking status
-    \item Anything append only
+    \item Recording of transactions
+      \begin{itemize}
+        \item shopping chart
+        \item user transactions
+      \end{itemize}
+    \item Time ser\item shopping cardinalityies data
+      \begin{itemize}
+        \item logs of any kind, e.g. sensors with huge outputs
+        \item IoT
+        \item user / behaviour analytics
+      \end{itemize}
+    \item \textbf{Social media input and analysis}
   \end{itemize}
+
+  \note[item]{Since it was developed to solve Facebook Inbox problem}
+
 \end{frame}
 
 \section{How to use CQL}  % Erik
@@ -249,8 +296,20 @@ DELETE FROM Person WHERE lastname="Musterfrau" AND name = "MAXI";
   \end{itemize}
 \end{frame}
 
+\begin{frame}{How to model data - Contraints}
+  \begin{itemize}
+    \item no joins
+    \item no referential integrity
+    \item denormalization
+    \item query-first desig
+    \item designing for storage optimization
+    \item sorting, design decision
+  \end{itemize}
+  % TODO - extensive notes
+\end{frame}
+
 \begin{frame}{How to model data - Example}
-  % TODO
+  % TODO, Safaribooks screenshot
 \end{frame}
 
 \begin{frame}{How to model data}
