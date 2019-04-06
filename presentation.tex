@@ -591,7 +591,7 @@ DELETE FROM Person
   \note<2>[item]{Two nodes cannot share a broadcast address (e.g. NAT)}
 \end{frame}
 
-\begin{frame}[fragile]{How to set up - Initial node}
+\begin{frame}[fragile]{How to set up - Initial node \cite{cassandra_config}}
   /etc/cassandra/cassandra.yaml
   \begin{semiverbatim}
 # Opens socket on this address
@@ -611,7 +611,7 @@ start_native_transport: true
   \note[item]{For single node cluster use \lstinline{localhost} everywhere}
 \end{frame}
 
-\begin{frame}[fragile]{How to set up - Further nodes}
+\begin{frame}[fragile]{How to set up - Further nodes \cite{cassandra_config}}
   /etc/cassandra/cassandra.yaml
   \begin{semiverbatim}
 # Opens socket on this address
@@ -631,7 +631,7 @@ start_native_transport: true
   \note[item]{Three per datacenter recommended}
 \end{frame}
 
-\begin{frame}{More configuration}
+\begin{frame}{More configuration} \cite{cassandra_config, cassandra_jvm_tuning}
   \begin{itemize}
     \item Tune JVM parameters like heap size in \lstinline{cassandra-env.sh}
     \item Increase the number of tokens (virtual nodes) with \lstinline{num_tokens}
