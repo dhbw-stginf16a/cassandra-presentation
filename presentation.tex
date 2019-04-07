@@ -205,7 +205,7 @@
         \item "high performance at high write volumes with many concurrent client threads" \cite{cassandra_oreilly}
       \end{itemize}
     \item<3-> Geographical distribution
-    \item<4-> Evolving applications (Add/Remove columns)
+    \item<4-> Different columns per row
  \end{itemize}
 
     \note<1>[item]{Ingenuity, architecture and featureset limited when used as single-node}
@@ -216,6 +216,7 @@
     \note<2>[item]{Not many updates / data changes, slows read down}
     \note<3>[item]{Globally deployed application}
     \note<3>[item]{Configure to replicate across multiple data centers}
+    \note<3>[item]{Again: rows are sparse}
 
 \end{frame}
 
@@ -290,6 +291,9 @@
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_primary_key.jpeg}
   \end{center}
+  \note[item]{Partition key decides which node data lands on}
+  \note[item]{Clustering column decides order on single node}
+  \note[item]{Clustering cannot be changed in query}
 \end{frame}
 
 % Rework slide / make a summary, point out differences
