@@ -76,7 +76,7 @@
     \item 2008, Developed by Facebook for inbox searching
     \item 2010, Proper Apache project
     \item Mainly developed and supported by Datastax
-    \item 2019, 11th most popular database (db-engines.com)
+    \item 2019, 11th most popular database overall
   \end{itemize}
 \end{frame}
 
@@ -108,20 +108,20 @@
 \begin{frame}{Properties}
   \begin{itemize}
     \item<1-> Wide Column Store
-    \item<2-> Distributed and masterless Data Store
+    \item<2-> Distributed and masterless data store
     \item<4-> Elastic scalability
-    \item<5-> High Availability and Fault tolerance
+    \item<5-> High Availability and fault tolerance
     \item<6-> Tuneable Consistency
     \item<7-> Free software project of the Apache Foundation
 
   \end{itemize}
-  \note<1>[item]{table-like but not relational; later more}
-  \note<2>[item]{large data, distributed on commodity hardware}
-  \note<3>[item]{masterless, no single point of failure}
-  \note<4>[item]{add another machine, cassandra will adapt it}
+  \note<1>[item]{Table-like but not relational; later more}
+  \note<2>[item]{Large data, distributed on commodity hardware}
+  \note<3>[item]{Masterless, no single point of failure}
+  \note<4>[item]{Add another machine, Cassandra will adapt it}
   \note<5>[item]{Replace failed nodes with not downtime}
   \note<5>[item]{Replicate data to multiple data centers}
-  \note<6>[item]{reffered to as "eventual conistent"}
+  \note<6>[item]{From eventually to highly consistent}
   \note<7>[item]{Originally developed by Facebook in 2008, co-author Amazon DynamoDB}
 \end{frame}
 
@@ -155,87 +155,89 @@
 \section{Use-Cases Cassandra is (not) suited for}  % David
 \begin{frame}{Pros and cons}
   \begin{columns}[T]
-    \onslide<+->
+    \onslide<1->
     \begin{column}{0.55\textwidth}
       \underline{Use if you want/need}
 
       \begin{enumerate}[\textbf{\textcolor{aswe-data}{+}}]
-        \item<+-> Fast writes \\ (high throughput, not latency)
-        \item<+-> High availability
-        \item<+-> Easy (linear) horizontal scalability
-        \item<+-> No master $\rightarrow$ \\ Read from and write to any node
-        \item<+-> Flexible schema \\ (rows can have missing columns)
-        \item<+-> Globally distributed cluster (e.g. multicloud)
-        \item<+-> Query language similar SQL (CQL)
+        \item<2-> Fast writes \\ (high throughput, not latency)
+        \item<3-> High availability
+        \item<4-> Easy (linear) horizontal scalability
+        \item<5-> No master $\rightarrow$ \\ Read from and write to any node
+        \item<6-> Flexible schema \\ (rows can have missing columns)
+        \item<7-> Globally distributed cluster \\ (e.g. multicloud)
+        \item<8-> Query language similar SQL (CQL)
       \end{enumerate}
-      \note[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
-      \note[item]{Inter-node communication doesn't increase with more nodes}
-      \note[item]{Missing columns aren't even saved to disk (sparse)}
+      \note<1>[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
+      \note<4>[item]{Inter-node communication doesn't increase with more nodes}
+      \note<6>[item]{Missing columns not saved to disk (sparse)}
     \end{column}
 
-    \onslide<+->
+    \onslide<9->
     \begin{column}{0.45\textwidth}
       \underline{Don't use if you want/need}
 
       \begin{enumerate}[\textbf{\textcolor{aswe-preferences}{-}}]
-        \item<+-> Single system instance
-        \item<+-> Ever changing queries
-        \item<+-> Lots of updates and deletes interspersed with reads
-        \item<+-> Transactions (ACID)
-        \item<+-> Relations (joins, ...)
-        \item<+-> Column aggregation (\lstinline{GROUP BY})
-        \item<+-> \lstinline{AUTO INCREMENT}
-        \item<+-> Data validation / constraints (e.g. \lstinline{NULL} constraint, uniqueness)
+        \item<11-> Single system instance
+        \item<12-> Ever changing queries
+        \item<13-> Lots of updates and deletes interspersed with reads
+        \item<14-> Transactions (ACID)
+        \item<15-> Relations (joins, ...)
+        \item<16-> Column aggregation (\lstinline{GROUP BY})
+        \item<17-> \lstinline{AUTO INCREMENT}
+        \item<18-> Data validation (e.g. \lstinline{NULL} constraint, uniqueness)
       \end{enumerate}
-      \note[item]{Cassandra is \textbf{NOT} column oriented}
+      \note<12>[item]{Table is fine-tuned for query}
+      \note<13>[item]{Slows it down}
+      \note<16>[item]{Cassandra is \textbf{NOT} column oriented}
+      \note<17>[item]{Doesn't make sense in an AP system}
+      \note<18>[item]{Doesn't read before writing}
     \end{column}
   \end{columns}
 \end{frame}
 
-\begin{frame}{General UseCase Conditions}
+\begin{frame}{General Use-Case Conditions}
 %Abstract UseCases
  \begin{itemize}
     \item<1-> Large Deployments
-    \item<2-> Lots of writes, like a lot a lot
+    \item<2-> Tons of writes
       \begin{itemize}
-        \item<3-> "high performance at high write volumes with many concurrent client threads"
+        \item "high performance at high write volumes with many concurrent client threads" \cite{cassandra_oreilly}
       \end{itemize}
-    \item<4-> Geographical distribution
-    % TODO: Think about this
-    \item<5-> Evolving applications (Add/Remove columns)
+    \item<3-> Geographical distribution
+    \item<4-> Evolving applications (Add/Remove columns)
  \end{itemize}
 
-    % TODO fix numbering
-    \note<1>[item]{Ingenuiety, architecture and featureset limited when used as single-node}
-    \note<1>[item]{Several nodes? -> might be a fit}
-    \note<1>[item]{Dozen of nodes? -> great fit}
-    \note<2>[item]{Consider read / write ratio}
+    \note<1>[item]{Ingenuity, architecture and featureset limited when used as single-node}
+    \note<1>[item]{Several nodes? $\rightarrow$ might be a fit}
+    \note<1>[item]{Dozen of nodes? $\rightarrow$ great fit}
+    \note<2>[item]{Consider read/write ratio}
     \note<2>[item]{As mentioned, cassandra optimized for write throughput}
     \note<2>[item]{Not many updates / data changes, slows read down}
-    \note<3>[item]{Configure to replicate across multiple data centers}
     \note<3>[item]{Globally deployed application}
-    \note<3>[item]{Flexible schema, database evolves with application}
+    \note<3>[item]{Configure to replicate across multiple data centers}
 
 \end{frame}
 
-\begin{frame}{Suitable usecases}
+\begin{frame}{Suitable Use-Cases}
   Concrete use-cases
   \begin{itemize}
-    \item Recording of transactions
+    \item<1-> Recording of transactions
       \begin{itemize}
-        \item Shopping cart
-        \item User transactions
+        \item Shopping cart (Only for analytics!)
+        \item User transactions (e.g messages)
       \end{itemize}
-    \item Time series data
+    \item<2-> Time series data
       \begin{itemize}
         \item Logs of any kind, e.g. sensors with huge outputs
         \item IoT
         \item User / Behavioral analytics
       \end{itemize}
-    \item \textbf{Social media input and analysis}
+    \item<3-> \textbf{Social media input and analysis} (e.g. likes, comments)
   \end{itemize}
 
-  \note[item]{Since it was developed to solve Facebook Inbox problem}
+  \note<1>[item]{Only for analytics because no DB transactions!}
+  \note<1>[item]{Since it was developed to solve Facebook Inbox problem}
 
 \end{frame}
 
@@ -253,7 +255,7 @@
   \begin{itemize}
     \item<+-> No joins
     \item<+-> No referential integrity
-    \item<+-> Denormalization
+    \item<+-> Denormalization (instead of normalization)
     \item<+-> Query-first design
     \item<+-> Sorting, design decision
   \end{itemize}
@@ -390,7 +392,7 @@ DELETE FROM Person
   cqlsh:db>  age int
   cqlsh:db> );
   cqlsh:db> SELECT * FROM users WHERE age = 5;
-  \onslide<4->
+  \onslide<3->
   cqlsh:db> \textcolor{red}{InvalidRequest: [might filter data]}
   \onslide<4->
   cqlsh:db> CREATE INDEX ON users (age);
@@ -431,11 +433,15 @@ DELETE FROM Person
   Avoid columns
   \begin{itemize}
     \item<1-> with very high cardinality (e.g. user id)
-    \item<2-> with very low cardinality (e.g. country name)
+    \item<2-> with very low cardinality (e.g. any boolean)
     \item<3-> that are updated/deleted very frequently
   \end{itemize}
+
+  \onslide<4>
+  Best: Medium to low cardinality
+
   \note<1>[item]{Low chance of finding - no partition key $\rightarrow$ queries all nodes}
-  \note<2>[item]{Results in huge index rows}  % TODO: Think about a good explanation
+  \note<2>[item]{Doesn't help - still lots of searching but much jumping}
   \note<3>[item]{Updates have to update two tables}
   \note<3>[item]{Tombstones are stored in index - hard limit of 100K $\rightarrow$ Query FAILS}
 \end{frame}
@@ -445,19 +451,29 @@ DELETE FROM Person
   \begin{center}
     \includegraphics[width=0.75\textwidth]{resources/local_write.png}
     \begin{enumerate}
-      \item<+-> Write to journal on disk
-      \item<+-> Write to memtable in sorted order
+      \item<+-> Write to journal to disk in temporal order
+      \item<+-> Write to memtable in \textbf{sorted} order
       \item<+-> Flush to disk when memtable is too big
     \end{enumerate}
   \end{center}
 \end{frame}
 
 \begin{frame}{Read process \cite{datastaxReadData}}
-  \begin{center}
-    \includegraphics[width=0.75\textwidth]{resources/local_read.png}
-  \end{center}
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \includegraphics[width=\columnwidth]{resources/local_read.png}
 
-  Reading
+      \center{Magic}
+    \end{column}
+
+    \begin{column}{0.6\textwidth}
+      \begin{enumerate}
+        \item Check caches
+        \item Check memtable
+        \item Find SSTable and location with magic
+      \end{enumerate}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \subsection{How data is stored on disk}  % Erik
@@ -490,8 +506,10 @@ DELETE FROM Person
     \item Node joins ring $\rightarrow$ Joins at random location
     \item Node leaves ring $\rightarrow$ Leaves space on ring
   \end{itemize}
-  % https://www.datastax.com/wp-content/uploads/2012/02/numofmoves.png
-  \includegraphics[width=\textwidth]{resources/rebalancing.png}
+  \begin{center}
+    % https://www.datastax.com/wp-content/uploads/2012/02/numofmoves.png
+    \includegraphics[width=0.75\textwidth]{resources/rebalancing.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Ring with replicas and virtual nodes \cite{yelp_balancing}}
@@ -529,16 +547,11 @@ DELETE FROM Person
   % Draw manually if someone's bored
   % https://docs.datastax.com/en/cassandra/3.0/cassandra/images/arc_write-singleDCConOne.png
   \includegraphics[width=1.0\textwidth]{resources/distributed_write.png}
-\end{frame}
 
-\begin{frame}{How data is replicated}
-  % Can fail!
-  \begin{enumerate}
-    \item<1-> Client asks any node (becomes coordinator)
-    \item<2-> Coordinator asks responsible nodes (replicas)
-    \item<3-> When more than \lstinline{CL.write} nodes have confirmed write client is given answer
-    \item<4-> Temporarily offline nodes are later reminded with a \textit{hinted-handoff}
-  \end{enumerate}
+  \note[item]{Any node $\rightarrow$ Coordinator}
+  \note[item]{Coordinator asks replicas}
+  \note[item]{When more than \lstinline{CL.write} nodes have confirmed write client is given answer}
+  \note[item]{Can fail!}
 \end{frame}
 
 \begin{frame}{How data is replicated - Hinted Handoff \cite{hinted_handoff}}
@@ -572,9 +585,9 @@ DELETE FROM Person
 
 \section{Setup}  % Daniel
 
-\begin{frame}{Setup - overview}
+\begin{frame}{Setup - overview \cite{datastax_hardware}}
   \begin{enumerate}
-    \item<1-> Get enough nodes ($\geq3$ with $8+$ cores and 32GB RAM, lots of disk)
+    \item<1-> Get enough nodes ($\geq3$ with $8+$ cores and 32GB RAM, few TB of disk)
     % http://cassandra.apache.org/doc/latest/operating/hardware.html
     \item<2-> Set up network (each node with own IP reachable from the others)
     \item<3-> Adapt configuration files
