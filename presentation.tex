@@ -455,11 +455,14 @@ DELETE FROM Person
   \begin{center}
     \includegraphics[width=0.75\textwidth]{resources/local_write.png}
     \begin{enumerate}
-      \item<+-> Write to journal to disk in temporal order
-      \item<+-> Write to memtable in \textbf{sorted} order
-      \item<+-> Flush to disk when memtable is too big
+      \item<1-> Write to journal to disk in temporal order
+      \item<2-> Write to memtable in \textbf{sorted} order
+      \item<3-> Flush to disk when memtable is too big
     \end{enumerate}
   \end{center}
+  \note<1>[item]{Super fast because it's append only}
+  \note<2>[item]{Super fast because it's in memory}
+  \note<3>[item]{SSTable never changes}
 \end{frame}
 
 \begin{frame}{Read process \cite{datastaxReadData}}
@@ -475,6 +478,7 @@ DELETE FROM Person
         \item Check caches
         \item Check memtable
         \item Find SSTable and location with magic
+        \item Merge with memtable
       \end{enumerate}
     \end{column}
   \end{columns}
