@@ -384,72 +384,6 @@ DELETE FROM Person
   \end{semiverbatim}
 \end{frame}
 
-\subsection{Secondary index}  % Daniel
-
-\begin{frame}[fragile]{Secondary index - Why}
-  Make it possible to filter by a non primary-key column
-  \onslide<1->
-  \begin{semiverbatim}
-  \onslide<2->
-  cqlsh:db> CREATE TABLE users (
-  cqlsh:db>  username varchar PRIMARY KEY,
-  cqlsh:db>  age int
-  cqlsh:db> );
-  cqlsh:db> SELECT * FROM users WHERE age = 5;
-  \onslide<3->
-  cqlsh:db> \textcolor{red}{InvalidRequest: [might filter data]}
-  \onslide<4->
-  cqlsh:db> CREATE INDEX ON users (age);
-  cqlsh:db> SELECT * FROM users WHERE age = 5;
-
-   username | age
-   \--\--\--\--\--\--\--\--\--+\--\--\--\--
-      timmy |   5
-  \end{semiverbatim}
-  \note<2-3>[item]{Unpredicatable performance $\rightarrow$ ALLOW FILTERING}
-  \note<2-3>[item]{Has to go through all nodes and all of their data}
-\end{frame}
-
-\begin{frame}{Secondary index - Implementation \cite{datastax_secondary_index}}
-  % https://www.datastax.com/wp-content/uploads/2017/01/Native2i-Distributed-Index-3.png
-  \includegraphics[width=1.0\textwidth]{resources/distributed_index.png}
-  \note[item]{NOT tree, regular table}
-  \note[item]{Distributed, same location as data}
-  \note[item]{Restrict partition key $\rightarrow$ Find node}
-  \note[item]{Heuristic to fetch data from likely nodes in stages}
-\end{frame}
-
-\begin{frame}{Secondary index - Summary \cite{datastax_secondary_index}}
-  \begin{itemize}
-    \item<1-> Distributed table with different primary key
-    \item<2-> Located on same node as indexed data
-      \begin{itemize}
-        \item Fast to update
-        \item Partitions as balanced as data
-      \end{itemize}
-    \item<3-> Good practice to restrict partition key as well
-    \item<4-> Uses heuristic to fetch data from likely nodes $\rightarrow$ \textbf{Use LIMIT}
-  \end{itemize}
-  \note<3>[item]{Partition key $\rightarrow$ only needs to search single node}
-\end{frame}
-
-\begin{frame}{Secondary index - When not to use \cite{datastax_when_index}}
-  Avoid columns
-  \begin{itemize}
-    \item<1-> with very high cardinality (e.g. user id)
-    \item<2-> with very low cardinality (e.g. any boolean)
-    \item<3-> that are updated/deleted very frequently
-  \end{itemize}
-
-  \onslide<4>
-  Best: Medium to low cardinality
-
-  \note<1>[item]{Low chance of finding - no partition key $\rightarrow$ queries all nodes}
-  \note<2>[item]{Doesn't help - still lots of searching but much jumping}
-  \note<3>[item]{Updates have to update two tables}
-  \note<3>[item]{Tombstones are stored in index - hard limit of 100K $\rightarrow$ Query FAILS}
-\end{frame}
-
 \section{Local reads and writes}  % Erik
 \begin{frame}{Write process \cite{datastaxWriteData}}
   \begin{center}
@@ -589,6 +523,72 @@ DELETE FROM Person
         \item More nodes
       \end{itemize}
   \end{itemize}
+\end{frame}
+
+\subsection{Secondary index}  % Daniel
+
+\begin{frame}[fragile]{Secondary index - Why}
+  Make it possible to filter by a non primary-key column
+  \onslide<1->
+  \begin{semiverbatim}
+  \onslide<2->
+  cqlsh:db> CREATE TABLE users (
+  cqlsh:db>  username varchar PRIMARY KEY,
+  cqlsh:db>  age int
+  cqlsh:db> );
+  cqlsh:db> SELECT * FROM users WHERE age = 5;
+  \onslide<3->
+  cqlsh:db> \textcolor{red}{InvalidRequest: [might filter data]}
+  \onslide<4->
+  cqlsh:db> CREATE INDEX ON users (age);
+  cqlsh:db> SELECT * FROM users WHERE age = 5;
+
+   username | age
+   \--\--\--\--\--\--\--\--\--+\--\--\--\--
+      timmy |   5
+  \end{semiverbatim}
+  \note<2-3>[item]{Unpredicatable performance $\rightarrow$ ALLOW FILTERING}
+  \note<2-3>[item]{Has to go through all nodes and all of their data}
+\end{frame}
+
+\begin{frame}{Secondary index - Implementation \cite{datastax_secondary_index}}
+  % https://www.datastax.com/wp-content/uploads/2017/01/Native2i-Distributed-Index-3.png
+  \includegraphics[width=1.0\textwidth]{resources/distributed_index.png}
+  \note[item]{NOT tree, regular table}
+  \note[item]{Distributed, same location as data}
+  \note[item]{Restrict partition key $\rightarrow$ Find node}
+  \note[item]{Heuristic to fetch data from likely nodes in stages}
+\end{frame}
+
+\begin{frame}{Secondary index - Summary \cite{datastax_secondary_index}}
+  \begin{itemize}
+    \item<1-> Distributed table with different primary key
+    \item<2-> Located on same node as indexed data
+      \begin{itemize}
+        \item Fast to update
+        \item Partitions as balanced as data
+      \end{itemize}
+    \item<3-> Good practice to restrict partition key as well
+    \item<4-> Uses heuristic to fetch data from likely nodes $\rightarrow$ \textbf{Use LIMIT}
+  \end{itemize}
+  \note<3>[item]{Partition key $\rightarrow$ only needs to search single node}
+\end{frame}
+
+\begin{frame}{Secondary index - When not to use \cite{datastax_when_index}}
+  Avoid columns
+  \begin{itemize}
+    \item<1-> with very high cardinality (e.g. user id)
+    \item<2-> with very low cardinality (e.g. any boolean)
+    \item<3-> that are updated/deleted very frequently
+  \end{itemize}
+
+  \onslide<4>
+  Best: Medium to low cardinality
+
+  \note<1>[item]{Low chance of finding - no partition key $\rightarrow$ queries all nodes}
+  \note<2>[item]{Doesn't help - still lots of searching but much jumping}
+  \note<3>[item]{Updates have to update two tables}
+  \note<3>[item]{Tombstones are stored in index - hard limit of 100K $\rightarrow$ Query FAILS}
 \end{frame}
 
 \section{Setup}  % Daniel
