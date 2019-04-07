@@ -105,7 +105,7 @@
 % https://www.datastax.com/resources/casestudies/ebay
 \end{frame}
 
-\begin{frame}{Properties}
+\begin{frame}{Properties \cite{generalProperties}}
   \begin{itemize}
     \item<1-> Wide Column Store
     \item<2-> Distributed and masterless data store
@@ -125,7 +125,7 @@
   \note<7>[item]{Originally developed by Facebook in 2008, co-author Amazon DynamoDB}
 \end{frame}
 
-\section{Wide Column Store}  % David
+\section{Wide Column Store \cite{wideColumnStore}}  % David
 \begin{frame}{Wide Column Store}
   \begin{itemize}
     \item<1-> Tabular but not relational
@@ -146,14 +146,14 @@
   \note<6>[item]{Quote from original paper}
 \end{frame}
 
-\begin{frame}{Wide Column Store}  % TODO cite
+\begin{frame}{Wide Column Store \cite{WideColumnStoreGraphic}}  % TODO cite
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/wide_column_store.png}
   \end{center}
 \end{frame}
 
 \section{Use-Cases Cassandra is (not) suited for}  % David
-\begin{frame}{Pros and cons}
+\begin{frame}{Pros and cons \cite{ProsAndCons}}
   \begin{columns}[T]
     \onslide<1->
     \begin{column}{0.55\textwidth}
@@ -196,7 +196,7 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{General Use-Case Conditions}
+\begin{frame}{General Use-Case Conditions \cite{GeneralUseCasesConditions}}
 %Abstract UseCases
  \begin{itemize}
     \item<1-> Large Deployments
@@ -220,7 +220,7 @@
 
 \end{frame}
 
-\begin{frame}{Suitable Use-Cases}
+\begin{frame}{Suitable Use-Cases \cite{suitableUseCases}}
   Concrete use-cases
   \begin{itemize}
     \item<1-> Recording of transactions
@@ -252,7 +252,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{How to model data - Constraints}
+\begin{frame}{How to model data - Constraints \cite{modelDataConstraints}}
   \begin{itemize}
     \item<+-> No joins
     \item<+-> No referential integrity
@@ -543,7 +543,7 @@ DELETE FROM Person
 
 \section{Distributed writes and reads (CAP)}  % Daniel
 
-\begin{frame}{CAP Theorem}
+\begin{frame}{CAP Theorem \cite{cassandraInCAPtheorem}}
   \begin{itemize}
     \item AP by default
     \item Can be tuned on a continuum towards CP
@@ -567,7 +567,7 @@ DELETE FROM Person
   \includegraphics[width=1.0\textwidth]{resources/hinted_handoff.png}
 \end{frame}
 
-\begin{frame}{How data is read with consensus}
+\begin{frame}{How data is read with consensus \cite{ReadConsensus}}
   \begin{enumerate}
     \item<1-> Client asks any node (becomes coordinator)
     \item<2-> Coordinator asks responsible nodes (replicas)
@@ -576,7 +576,7 @@ DELETE FROM Person
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{CAP Theorem - Tunable Variables}
+\begin{frame}{CAP Theorem - Tunable Variables \cite{CAPtheoremVariables}}
   \begin{itemize}
     \item<+-> Consistency: (\lstinline{ANY} $\rightarrow$ \textbf{\lstinline{ONE}} $\rightarrow$ \lstinline{QUORUM} $\rightarrow$ \lstinline{ALL})
       \begin{itemize}
