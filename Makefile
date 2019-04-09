@@ -5,4 +5,6 @@ presentation.pdf: presentation.tex resources/* presentation.bib
 
 clean:
 	latexmk -C
-	rm -f presentation.bbl presentation.run.xml
+	rm -f presentation.bbl presentation.run.xml \
+		presentation.nav presentation.snm presentation.vrb latexmk_log.txt \
+		result
