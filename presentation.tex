@@ -71,12 +71,12 @@
 
 \section{Overview}  % David
 
-\begin{frame}{History \cite{cassandra_paper, cassandra_apache, db_engines}}
+\begin{frame}{History}
   \begin{itemize}
-    \item 2008, Developed by Facebook for inbox searching
-    \item 2010, Proper Apache project
-    \item Mainly developed and supported by Datastax
-    \item 2019, 11th most popular database overall
+    \item 2008, Developed by Facebook for inbox searching \cite{cassandra_paper}
+    \item 2010, Proper Apache project \cite{cassandra_apache}
+    \item Mainly developed and supported by Datastax \cite{cassandra_oreilly}
+    \item 2019, 11th most popular database overall \cite{db_engines}
   \end{itemize}
 \end{frame}
 
@@ -101,7 +101,7 @@
 
 \end{frame}
 
-\begin{frame}{Properties \cite{generalProperties}}
+\begin{frame}{Properties \cite{cassandra_paper, cassandra_apache}}
   \begin{itemize}
     \item<1-> Wide Column Store
     \item<2-> Distributed and masterless data store
@@ -121,7 +121,7 @@
   \note<7>[item]{Originally developed by Facebook in 2008, co-author Amazon DynamoDB}
 \end{frame}
 
-\section{Wide Column Store \cite{wideColumnStore}}  % David
+\section{Wide Column Store}  % David
 \begin{frame}{Wide Column Store}
   \begin{itemize}
     \item<1-> Tabular but not relational
@@ -135,21 +135,20 @@
   Key value store with wide (complex) values that consist of columns
 
   \onslide<6->
-  "Sparse, distributed multi-dimensional sorted map" \cite{cassandra_paper}
-  % Chang, F., Dean, J., Ghemawat, S., Hsieh, et al. (2008). Bigtable: A distributed storage system for structured data. ACM Transactions on Computer Systems (TOCS), 26(2), 4
+  "Sparse, distributed multi-dimensional sorted map" \cite{bigtable}
 
   \note<2>[item]{Unlike Vertica or SAP HANA}
   \note<6>[item]{Quote from original paper}
 \end{frame}
 
-\begin{frame}{Wide Column Store \cite{WideColumnStoreGraphic}}  % TODO cite
+\begin{frame}{Wide Column Store     \cite{wideColumnGraphic}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/wide_column_store.png}
   \end{center}
 \end{frame}
 
 \section{Use-Cases Cassandra is (not) suited for}  % David
-\begin{frame}{Pros and cons \cite{ProsAndCons}}
+\begin{frame}{Pros and cons}
   \begin{columns}[T]
     \onslide<1->
     \begin{column}{0.55\textwidth}
@@ -192,7 +191,7 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{General Use-Case Conditions \cite{GeneralUseCasesConditions}}
+\begin{frame}{General Use-Case Conditions \cite{cassandra_oreilly, cassandra_paper}}
 %Abstract UseCases
  \begin{itemize}
     \item<1-> Large Deployments
@@ -216,7 +215,7 @@
 
 \end{frame}
 
-\begin{frame}{Suitable Use-Cases \cite{suitableUseCases}}
+\begin{frame}{Suitable Use-Cases \cite{netflix, apple, ebay}}
   Concrete use-cases
   \begin{itemize}
     \item<1-> Recording of transactions
@@ -248,7 +247,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{How to model data - Constraints \cite{modelDataConstraints}}
+\begin{frame}{How to model data - Constraints}
   \begin{itemize}
     \item<+-> No joins
     \item<+-> No referential integrity
@@ -497,7 +496,7 @@ DELETE FROM Person
   \includegraphics[width=1.0\textwidth]{resources/hinted_handoff.png}
 \end{frame}
 
-\begin{frame}{How data is read with consensus \cite{ReadConsensus}}
+\begin{frame}{How data is read with consensus}
   \begin{enumerate}
     \item<1-> Client asks any node (becomes coordinator)
     \item<2-> Coordinator asks responsible nodes (replicas)
@@ -506,7 +505,7 @@ DELETE FROM Person
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{CAP Theorem - Tunable Variables \cite{CAPtheoremVariables}}
+\begin{frame}{CAP Theorem - Tunable Variables}
   \begin{itemize}
     \item<+-> Consistency: (\lstinline{ANY} $\rightarrow$ \textbf{\lstinline{ONE}} $\rightarrow$ \lstinline{QUORUM} $\rightarrow$ \lstinline{ALL})
       \begin{itemize}
