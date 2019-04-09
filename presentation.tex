@@ -141,7 +141,7 @@
   \note<6>[item]{Quote from original paper}
 \end{frame}
 
-\begin{frame}{Wide Column Store     \cite{wideColumnGraphic}}
+\begin{frame}{Wide Column Store \cite{wideColumnGraphic}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/wide_column_store.png}
   \end{center}
@@ -192,7 +192,6 @@
 \end{frame}
 
 \begin{frame}{General Use-Case Conditions \cite{cassandra_oreilly, cassandra_paper}}
-%Abstract UseCases
  \begin{itemize}
     \item<1-> Large Deployments
     \item<2-> Tons of writes
@@ -249,13 +248,26 @@
 
 \begin{frame}{How to model data - Constraints}
   \begin{itemize}
-    \item<+-> No joins
-    \item<+-> No referential integrity
-    \item<+-> Denormalization (instead of normalization)
-    \item<+-> Query-first design
-    \item<+-> Sorting, design decision
+    \item<1-> No joins
+    \item<2-> No referential integrity
+    \item<3-> Denormalization (instead of normalization)
+    \item<4-> Query-first design
+    \item<5-> Sorting, design decision
   \end{itemize}
-  % TODO - extensive notes
+  \note<1>[item]{Cassandra has no ability to execute joins}
+  \note<1>[item]{BAD; perform join client side}
+  \note<1>[item]{GOOD; create a denormalized second table that represents the join result}
+
+  \note<2>[item]{no concept of referential integrity across tables}
+  \note<2>[item]{IDs related to other entities can be stored, but operations are not available}
+
+  \note<3>[item]{performes best when data model is denormalized}
+
+  \note<4>[item]{start with query model instead of data model}
+  \note<4>[item]{write down most common query paths -> then create tables}
+
+  \note<5>[item]{sort order available on queries is fixed}
+
 \end{frame}
 
 \begin{frame}{How to model data - ERM \cite{cassandra_oreilly}}
