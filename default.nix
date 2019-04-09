@@ -21,7 +21,7 @@ let
       logreq
       xstring
 
-      siunitx
+      siunitx  
       ;
   };
 
@@ -50,7 +50,7 @@ in
     src = ./.;
 
     buildInputs = [
-      latexPackage pplatex
+      latexPackage pplatex pdfpc
     ];
 
     # We could be building from an unclean directory, so remove intermediate files first

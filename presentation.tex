@@ -8,7 +8,7 @@
 % Use T1 Font encoding to support more glyphs
 \usepackage[T1]{fontenc}
 
-%\setbeameroption{show notes on second screen}
+\setbeameroption{show notes on second screen}
 
 % Number sections in table of contents
 \setbeamertemplate{section in toc}[sections numbered]
@@ -78,6 +78,12 @@
     \item Mainly developed and supported by Datastax \cite{cassandra_oreilly}
     \item 2019, 11th most popular database overall \cite{db_engines}
   \end{itemize}
+  \note[item]{data centers all around the world}
+  \note[item]{performance, reliability and efficiency}
+  \note[item]{continuous growth the platform needs to be highly scalable}
+  \note[item]{InboxSearch: Search through Facebook Inbox}
+  \note[item]{very high write throughput}
+
 \end{frame}
 
 \begin{frame}{Deployments}
@@ -105,20 +111,20 @@
   \begin{itemize}
     \item<1-> Wide Column Store
     \item<2-> Distributed and masterless data store
-    \item<4-> Elastic scalability
-    \item<5-> High Availability and fault tolerance
-    \item<6-> Tuneable Consistency
-    \item<7-> Free software project of the Apache Foundation
+    \item<3-> Elastic scalability
+    \item<4-> High Availability and fault tolerance
+    \item<5-> Tuneable Consistency
+    \item<6-> Free software project of the Apache Foundation
 
   \end{itemize}
   \note<1>[item]{Table-like but not relational; later more}
   \note<2>[item]{Large data, distributed on commodity hardware}
-  \note<3>[item]{Masterless, no single point of failure}
-  \note<4>[item]{Add another machine, Cassandra will adapt it}
-  \note<5>[item]{Replace failed nodes with not downtime}
-  \note<5>[item]{Replicate data to multiple data centers}
-  \note<6>[item]{From eventually to highly consistent}
-  \note<7>[item]{Originally developed by Facebook in 2008, co-author Amazon DynamoDB}
+  \note<2>[item]{Masterless, no single point of failure}
+  \note<3>[item]{Add another machine, Cassandra will adapt it}
+  \note<4>[item]{Replace failed nodes with not downtime}
+  \note<4>[item]{Replicate data to multiple data centers}
+  \note<5>[item]{From eventually to highly consistent}
+  \note<6>[item]{Originally developed by Facebook in 2008, co-author Amazon DynamoDB}
 \end{frame}
 
 \section{Wide Column Store}  % David
