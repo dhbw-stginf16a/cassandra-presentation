@@ -121,7 +121,7 @@
   \note<2>[item]{Large data, distributed on commodity hardware}
   \note<2>[item]{Masterless, no single point of failure}
   \note<3>[item]{Add another machine, Cassandra will adapt it}
-  \note<4>[item]{Replace failed nodes with not downtime}
+  \note<4>[item]{Replace failed nodes with no downtime}
   \note<4>[item]{Replicate data to multiple data centers}
   \note<5>[item]{From eventually to highly consistent}
   \note<6>[item]{Originally developed by Facebook in 2008, co-author Amazon DynamoDB}
@@ -161,17 +161,17 @@
       \underline{Use if you want/need}
 
       \begin{enumerate}[\textbf{\textcolor{aswe-data}{+}}]
-        \item<2-> Fast writes \\ (high throughput, not latency)
-        \item<3-> High availability
-        \item<4-> Easy (linear) horizontal scalability
-        \item<5-> No master $\rightarrow$ \\ Read from and write to any node
-        \item<6-> Flexible schema \\ (rows can have missing columns)
-        \item<7-> Globally distributed cluster \\ (e.g. multicloud)
-        \item<8-> Query language similar SQL (CQL)
+        \item<1-> Fast writes \\ (high throughput, not latency)
+        \item<2-> High availability
+        \item<3-> Easy (linear) horizontal scalability
+        \item<4-> No master $\rightarrow$ \\ Read from and write to any node
+        \item<5-> Flexible schema \\ (rows can have missing columns)
+        \item<6-> Globally distributed cluster \\ (e.g. multicloud)
+        \item<7-> Query language similar SQL (CQL)
       \end{enumerate}
       \note<1>[item]{Writes include \lstinline{INSERT} \lstinline{UPDATE} \lstinline{DELETE}}
-      \note<4>[item]{Inter-node communication doesn't increase with more nodes}
-      \note<6>[item]{Missing columns not saved to disk (sparse)}
+      \note<3>[item]{Inter-node communication doesn't increase with more nodes}
+      \note<5>[item]{Missing columns not saved to disk (sparse)}
     \end{column}
 
     \onslide<9->
@@ -211,12 +211,16 @@
     \note<1>[item]{Ingenuity, architecture and featureset limited when used as single-node}
     \note<1>[item]{Several nodes? $\rightarrow$ might be a fit}
     \note<1>[item]{Dozen of nodes? $\rightarrow$ great fit}
+
     \note<2>[item]{Consider read/write ratio}
     \note<2>[item]{As mentioned, cassandra optimized for write throughput}
     \note<2>[item]{Not many updates / data changes, slows read down}
-    \note<3>[item]{Globally deployed application}
+    \note<2>[item]{Quote; you can even write to multiple nodes with multiple threads}
+
+    \note<3>[item]{Globally deployed application, bring data to user}
     \note<3>[item]{Configure to replicate across multiple data centers}
-    \note<3>[item]{Again: rows are sparse}
+
+    \note<4>[item]{Again: rows are sparse}
 
 \end{frame}
 
@@ -225,7 +229,7 @@
   \begin{itemize}
     \item<1-> Recording of transactions
       \begin{itemize}
-        \item Shopping cart (Only for analytics!)
+        \item Shopping cart (fraud detection) \cite{usecaseFraud}
         \item User transactions (e.g messages)
       \end{itemize}
     \item<2-> Time series data
@@ -237,7 +241,6 @@
     \item<3-> \textbf{Social media input and analysis} (e.g. likes, comments)
   \end{itemize}
 
-  \note<1>[item]{Only for analytics because no DB transactions!}
   \note<1>[item]{Since it was developed to solve Facebook Inbox problem}
 
 \end{frame}
@@ -294,13 +297,14 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{How to model data - Chebotko Diagram \cite{cassandra_oreilly}}
+\begin{frame}{How to model data - Chebotko Diagram \cite{cassandra_oreilly, chebotkoPaper}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_chebotko_step3.png}
   \end{center}
 \end{frame}
+\note[item]{}
 
-\begin{frame}{How to model data - Primary Key \cite{cassandra_oreilly}}
+\begin{frame}{How to model data - Primary Key \cite{cassandra_oreilly, chebotkoPaper}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_primary_key.jpeg}
   \end{center}
