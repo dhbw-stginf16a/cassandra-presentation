@@ -80,29 +80,25 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Deployments \cite{cern, netflix, ebay, ebay2, apple}}
+\begin{frame}{Deployments}
   Widely used by large companies in big clusters:
 
   \begin{tabular}{@{}ll}
     \hline
-    CERN    & Storage backend for ATLAS detector \\
+    CERN    & Storage backend for ATLAS detector \cite{cern} \\
     \hline
     Netflix & 2,500 nodes, 420 TB, over 1 trillion requests per day \\
-            & Migrated from Oracle to Cassandra \\
+            & Migrated from Oracle to Cassandra \cite{netflix} \\
     \hline
     eBay    & 6 billion writes and 5 billion reads daily \\
-            & Single Cassandra table of 40TB \\
+            & Single Cassandra table of 40TB \cite{ebay, ebay2} \\
     \hline
     \onslide<2->
     Apple   & >75k Cassandra nodes with \textbf{10PB} in production \\
-            & Several clusters with \textbf{1000+ nodes each!} \\
+            & Several clusters with \textbf{1000+ nodes each!} \cite{apple} \\
     \hline
   \end{tabular}
 
-% https://cdsweb.cern.ch/record/1432912/files/ATL-DAQ-SLIDE-2012-067.pdf
-% https://www.slideshare.net/adrianco/migrating-netflix-from-oracle-to-global-cassandra/28-Remote_Copies_Cassandra_duplicates_across
-% https://www.slideshare.net/jaykumarpatel/cassandra-at-ebay-13920376
-% https://www.datastax.com/resources/casestudies/ebay
 \end{frame}
 
 \begin{frame}{Properties \cite{generalProperties}}
