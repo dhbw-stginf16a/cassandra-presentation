@@ -48,12 +48,15 @@
 \definecolor{aswe-data}{cmyk}{0.85,0.1,1,0}
 
 % Content
-\usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
+\usepackage[style=apa, citestyle=apa, backend=biber,sorting=none]{biblatex}
 \addbibresource{presentation.bib}
 \setbeamertemplate{bibliography item}{\insertbiblabel}
 \setbeamertemplate{bibliography entry title}{}
 \setbeamertemplate{bibliography entry location}{}
 \setbeamertemplate{bibliography entry note}{}
+
+\newcommand{\tinycite}[1]{\tiny{(\cite{#1})}}
+%\newcommand{\tinycite}[1]{foo}
 
 \title{Introduction to Apache Cassandra}
 \subtitle{}
@@ -73,10 +76,10 @@
 
 \begin{frame}{History}
   \begin{itemize}
-    \item 2008, Developed by Facebook for inbox searching \cite{cassandra_paper}
-    \item 2010, Proper Apache project \cite{cassandra_apache}
-    \item Mainly developed and supported by Datastax \cite{cassandra_oreilly}
-    \item 2019, 11th most popular database overall \cite{db_engines}
+    \item{2008, Developed by Facebook for inbox searching \tinycite{cassandra_paper}}
+    \item{2010, Proper Apache project \tinycite{cassandra_apache}}
+    \item{Mainly developed and supported by Datastax \tinycite{cassandra_oreilly}}
+    \item{2019, 11th most popular database overall \tinycite{db_engines}}
   \end{itemize}
   \note[item]{data centers all around the world}
   \note[item]{performance, reliability and efficiency}
@@ -91,23 +94,23 @@
 
   \begin{tabular}{@{}ll}
     \hline
-    CERN    & Storage backend for ATLAS detector \cite{cern} \\
+    CERN    & Storage backend for ATLAS detector \tinycite{cern} \\
     \hline
     Netflix & 2,500 nodes, 420 TB, over 1 trillion requests per day \\
-            & Migrated from Oracle to Cassandra \cite{netflix} \\
+            & Migrated from Oracle to Cassandra \tinycite{netflix} \\
     \hline
     eBay    & 6 billion writes and 5 billion reads daily \\
-            & Single Cassandra table of 40TB \cite{ebay, ebay2} \\
+            & Single Cassandra table of 40TB \tinycite{ebay, ebay2} \\
     \hline
     \onslide<2->
     Apple   & >75k Cassandra nodes with \textbf{10PB} in production \\
-            & Several clusters with \textbf{1000+ nodes each!} \cite{apple} \\
+            & Several clusters with \textbf{1000+ nodes each!} \tinycite{apple} \\
     \hline
   \end{tabular}
 
 \end{frame}
 
-\begin{frame}{Properties \cite{cassandra_paper, cassandra_apache}}
+\begin{frame}{Properties \tinycite{cassandra_paper, cassandra_apache}}
   \begin{itemize}
     \item<1-> Wide Column Store
     \item<2-> Distributed and masterless data store
@@ -141,13 +144,13 @@
   Key value store with wide (complex) values that consist of columns
 
   \onslide<6->
-  "Sparse, distributed multi-dimensional sorted map" \cite{bigtable}
+  "Sparse, distributed multi-dimensional sorted map" \tinycite{chang2008bigtable}
 
   \note<2>[item]{Unlike Vertica or SAP HANA}
   \note<6>[item]{Quote from original paper}
 \end{frame}
 
-\begin{frame}{Wide Column Store \cite{wideColumnGraphic}}
+\begin{frame}{Wide Column Store \tinycite{wideColumnGraphic}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/wide_column_store.png}
   \end{center}
@@ -197,12 +200,12 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{General Use-Case Conditions \cite{cassandra_oreilly, cassandra_paper}}
+\begin{frame}{General Use-Case Conditions \tinycite{cassandra_oreilly, cassandra_paper}}
  \begin{itemize}
     \item<1-> Large Deployments
     \item<2-> Tons of writes
       \begin{itemize}
-        \item "high performance at high write volumes with many concurrent client threads" \cite{cassandra_oreilly}
+        \item "high performance at high write volumes with many concurrent client threads" \tinycite{cassandra_oreilly}
       \end{itemize}
     \item<3-> Geographical distribution
     \item<4-> Different columns per row
@@ -224,13 +227,13 @@
 
 \end{frame}
 
-\begin{frame}{Suitable Use-Cases \cite{netflix, apple, ebay}}
+\begin{frame}{Suitable Use-Cases \tinycite{netflix, apple, ebay}}
   Concrete use-cases
   \begin{itemize}
     \item<1-> Recording of transactions
       \begin{itemize}
-        \item Shopping cart (fraud detection) \cite{usecaseFraud}
-        \item User transactions (e.g messages)
+        \item{Shopping cart (fraud detection) \tinycite{usecaseFraud}}
+        \item{User transactions (e.g messages)}
       \end{itemize}
     \item<2-> Time series data
       \begin{itemize}
@@ -247,7 +250,7 @@
 
 \section{How to model data (or rather tables)}  % David
 
-\begin{frame}{How to model data - Assumptions \cite{hobbs_datamodeling, guru99_modeling}}
+\begin{frame}{How to model data - Assumptions \tinycite{hobbs_datamodeling, guru99_modeling}}
   \begin{itemize}
     \item Writing is cheap
     \item You have a lot of disk space
@@ -279,31 +282,31 @@
 
 \end{frame}
 
-\begin{frame}{How to model data - ERM \cite{cassandra_oreilly}}
+\begin{frame}{How to model data - ERM \tinycite{cassandra_oreilly}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_entity_relation_step0.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{How to model data - Tables \cite{cassandra_oreilly}}
+\begin{frame}{How to model data - Tables \tinycite{cassandra_oreilly}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_rdbms_step1.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{How to model data - Queries \cite{cassandra_oreilly}}
+\begin{frame}{How to model data - Queries \tinycite{cassandra_oreilly}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_queries_step2.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{How to model data - Chebotko Diagram \cite{cassandra_oreilly, chebotkoPaper}}
+\begin{frame}{How to model data - Chebotko Diagram \tinycite{cassandra_oreilly, chebotko2015data}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_chebotko_step3.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{How to model data - Primary Key \cite{cassandra_oreilly, chebotkoPaper}}
+\begin{frame}{How to model data - Primary Key \tinycite{cassandra_oreilly, chebotko2015data}}
   \begin{center}
     \includegraphics[width=0.75\columnwidth]{resources/model_example_primary_key.jpeg}
   \end{center}
@@ -331,7 +334,7 @@
 \subsection{API Definition}
 \subsection{CQL v. SQL}
 \subsubsection{Creating a database(keystore)}
-\begin{frame}[fragile]{Creating a database (keystore) \cite{cqlAlexMeng}} % https://medium.com/@alexbmeng/cassandra-query-language-cql-vs-sql-7f6ed7706b4c
+\begin{frame}[fragile]{Creating a database (keystore) \tinycite{cqlAlexMeng}} % https://medium.com/@alexbmeng/cassandra-query-language-cql-vs-sql-7f6ed7706b4c
   \begin{semiverbatim}
 /* Create a new keyspace in CQL */
 CREATE KEYSPACE data WITH replication =
@@ -344,7 +347,7 @@ CREATE DATABASE data;
 
 \subsubsection{Create Table}
 
-\begin{frame}[fragile]{Create Table \cite{cqlAlexMeng, newInCQL3}}
+\begin{frame}[fragile]{Create Table \tinycite{cqlAlexMeng, newInCQL3}}
   \begin{semiverbatim}
 CREATE TABLE groups (
    group_location varchar,
@@ -355,7 +358,7 @@ CREATE TABLE groups (
   \end{semiverbatim}
 \end{frame}
 
-\begin{frame}[fragile]{Primary Key \cite{cqlPrimaryKeyDefinition}}
+\begin{frame}[fragile]{Primary Key \tinycite{cqlPrimaryKeyDefinition}}
   \begin{semiverbatim}
       partition key       clustering key  clustering key
        |       |                |            |
@@ -365,7 +368,7 @@ CREATE TABLE groups (
   \end{semiverbatim}
 \end{frame}
 
-\begin{frame}{Cassandra API \cite{cassandra_paper}}
+\begin{frame}{Cassandra API \tinycite{cassandra_paper}}
   \begin{itemize}
     \item insert(table, key, rowMutation) \\
           \only<2->{\lstinline{UPDATE table SET rowmutation WHERE key}}
@@ -377,7 +380,7 @@ CREATE TABLE groups (
 \end{frame}
 
 \subsubsection{Insert/Update Data}
-\begin{frame}[fragile]{Insert/Update Data \cite{cqlAlexMeng, newInCQL3}} % https://www.datastax.com/dev/blog/whats-new-in-cql-3-0
+\begin{frame}[fragile]{Insert/Update Data \tinycite{cqlAlexMeng, newInCQL3}} % https://www.datastax.com/dev/blog/whats-new-in-cql-3-0
   What is the difference of the statements?
   \begin{semiverbatim}
 /* Inserting Data */
@@ -392,7 +395,7 @@ WHERE lastname='Musterfrau' AND name = 'MAXI';
 \end{frame}
 
 \subsubsection{Delete Data}
-\begin{frame}[fragile]{Delete Data \cite{cqlAlexMeng}}
+\begin{frame}[fragile]{Delete Data \tinycite{cqlAlexMeng}}
   \begin{semiverbatim}
 /* Deleting Data */
 DELETE FROM Person
@@ -401,7 +404,7 @@ DELETE FROM Person
 \end{frame}
 
 \section{Local reads and writes}  % Erik
-\begin{frame}{Write process \cite{datastaxWriteData}}
+\begin{frame}{Write process \tinycite{datastaxWriteData}}
   \begin{center}
     \includegraphics[width=0.75\textwidth]{resources/local_write.png}
     \begin{enumerate}
@@ -415,7 +418,7 @@ DELETE FROM Person
   \note<3>[item]{SSTable never changes}
 \end{frame}
 
-\begin{frame}{Read process \cite{datastaxReadData}}
+\begin{frame}{Read process \tinycite{datastaxReadData}}
   \begin{columns}
     \begin{column}{0.4\textwidth}
       \includegraphics[width=\columnwidth]{resources/local_read.png}
@@ -444,7 +447,7 @@ DELETE FROM Person
 
 \section{How the cluster works}  % Daniel
 
-\begin{frame}{Token Ring \cite{cassandra_architecture_akhil}}
+\begin{frame}{Token Ring \tinycite{cassandra_architecture_akhil}}
   % http://abiasforaction.net/wp-content/uploads/2015/01/Cassandra-Ring.jpg
   \begin{columns}
     \begin{column}{0.6\textwidth}
@@ -459,7 +462,7 @@ DELETE FROM Person
   \end{columns}
 \end{frame}
 
-\begin{frame}{Node joins or leaves ring - Rebalancing \cite{datastax_balancing}}
+\begin{frame}{Node joins or leaves ring - Rebalancing \tinycite{datastax_balancing}}
   \begin{itemize}
     \item Node joins ring $\rightarrow$ Joins at random location
     \item Node leaves ring $\rightarrow$ Leaves space on ring
@@ -470,7 +473,7 @@ DELETE FROM Person
   \end{center}
 \end{frame}
 
-\begin{frame}{Ring with replicas and virtual nodes \cite{yelp_balancing}}
+\begin{frame}{Ring with replicas and virtual nodes \tinycite{yelp_balancing}}
   \begin{columns}
     \begin{column}{0.7\textwidth}
       % https://engineeringblog.yelp.com/images/posts/monitoring-cassandra-at-scale/cassandra_ring.png
@@ -493,7 +496,7 @@ DELETE FROM Person
 
 \section{Distributed writes and reads (CAP)}  % Daniel
 
-\begin{frame}{CAP Theorem \cite{cassandraInCAPtheorem}}
+\begin{frame}{CAP Theorem \tinycite{cassandraInCAPtheorem}}
   \begin{itemize}
     \item AP by default
     \item Can be tuned on a continuum towards CP
@@ -501,7 +504,7 @@ DELETE FROM Person
   \end{itemize}
 \end{frame}
 
-\begin{frame}{How data is replicated \cite{cassandra_distributed_write}}
+\begin{frame}{How data is replicated \tinycite{cassandra_distributed_write}}
   % Draw manually if someone's bored
   % https://docs.datastax.com/en/cassandra/3.0/cassandra/images/arc_write-singleDCConOne.png
   \includegraphics[width=1.0\textwidth]{resources/distributed_write.png}
@@ -512,7 +515,7 @@ DELETE FROM Person
   \note[item]{Can fail!}
 \end{frame}
 
-\begin{frame}{How data is replicated - Hinted Handoff \cite{hinted_handoff}}
+\begin{frame}{How data is replicated - Hinted Handoff \tinycite{hinted_handoff}}
   % https://docs.datastax.com/en/cassandra/3.0/cassandra/images/dml_hinted_handoff.png
   \includegraphics[width=1.0\textwidth]{resources/hinted_handoff.png}
 \end{frame}
@@ -567,7 +570,7 @@ DELETE FROM Person
   \note<2-3>[item]{Has to go through all nodes and all of their data}
 \end{frame}
 
-\begin{frame}{Secondary index - Implementation \cite{datastax_secondary_index}}
+\begin{frame}{Secondary index - Implementation \tinycite{datastax_secondary_index}}
   % https://www.datastax.com/wp-content/uploads/2017/01/Native2i-Distributed-Index-3.png
   \includegraphics[width=1.0\textwidth]{resources/distributed_index.png}
   \note[item]{NOT tree, regular table}
@@ -576,7 +579,7 @@ DELETE FROM Person
   \note[item]{Heuristic to fetch data from likely nodes in stages}
 \end{frame}
 
-\begin{frame}{Secondary index - Summary \cite{datastax_secondary_index}}
+\begin{frame}{Secondary index - Summary \tinycite{datastax_secondary_index}}
   \begin{itemize}
     \item<1-> Distributed table with different primary key
     \item<2-> Located on same node as indexed data
@@ -590,7 +593,7 @@ DELETE FROM Person
   \note<3>[item]{Partition key $\rightarrow$ only needs to search single node}
 \end{frame}
 
-\begin{frame}{Secondary index - When not to use \cite{datastax_when_index}}
+\begin{frame}{Secondary index - When not to use \tinycite{datastax_when_index}}
   Avoid columns
   \begin{itemize}
     \item<1-> with very high cardinality (e.g. user id)
@@ -609,7 +612,7 @@ DELETE FROM Person
 
 \section{Setup}  % Daniel
 
-\begin{frame}{Setup - overview \cite{datastax_hardware}}
+\begin{frame}{Setup - overview \tinycite{datastax_hardware}}
   \begin{enumerate}
     \item<1-> Get enough nodes ($\geq3$ with $8+$ cores and 32GB RAM, few TB of disk)
     % http://cassandra.apache.org/doc/latest/operating/hardware.html
@@ -631,7 +634,7 @@ DELETE FROM Person
   \note<2>[item]{Two nodes cannot share a broadcast address (e.g. NAT)}
 \end{frame}
 
-\begin{frame}[fragile]{How to set up - Initial node \cite{cassandra_config}}
+\begin{frame}[fragile]{How to set up - Initial node \tinycite{cassandra_config}}
   /etc/cassandra/cassandra.yaml
   \begin{semiverbatim}
 # Opens socket on this address
@@ -651,7 +654,7 @@ start_native_transport: true
   \note[item]{For single node cluster use \lstinline{localhost} everywhere}
 \end{frame}
 
-\begin{frame}[fragile]{How to set up - Further nodes \cite{cassandra_config}}
+\begin{frame}[fragile]{How to set up - Further nodes \tinycite{cassandra_config}}
   /etc/cassandra/cassandra.yaml
   \begin{semiverbatim}
 # Opens socket on this address
@@ -671,7 +674,7 @@ start_native_transport: true
   \note[item]{Three per datacenter recommended}
 \end{frame}
 
-\begin{frame}{More configuration \cite{cassandra_config, cassandra_jvm_tuning}}
+\begin{frame}{More configuration \tinycite{cassandra_config, cassandra_jvm_tuning}}
   \begin{itemize}
     \item Tune JVM parameters like heap size in \lstinline{cassandra-env.sh}
     \item Increase the number of tokens (virtual nodes) with \lstinline{num_tokens}
