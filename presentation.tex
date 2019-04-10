@@ -205,7 +205,7 @@
     \item<1-> Large Deployments
     \item<2-> Tons of writes
       \begin{itemize}
-        \item "high performance at high write volumes with many concurrent client threads" \tinycite{cassandra_oreilly}
+        \item{"high performance at high write volumes with many concurrent client threads" \tinycite{cassandra_oreilly}}
       \end{itemize}
     \item<3-> Geographical distribution
     \item<4-> Different columns per row
@@ -496,11 +496,11 @@ DELETE FROM Person
 
 \section{Distributed writes and reads (CAP)}  % Daniel
 
-\begin{frame}{CAP Theorem \tinycite{cassandraInCAPtheorem}}
+\begin{frame}{CAP Theorem \tinycite{cassandraInCAPtheorem, hale2010sacrifice}}
   \begin{itemize}
     \item AP by default
     \item Can be tuned on a continuum towards CP
-    \item AC not possible  % https://codahale.com/you-cant-sacrifice-partition-tolerance/
+    \item AC not possible
   \end{itemize}
 \end{frame}
 
