@@ -94,17 +94,17 @@
 
   \begin{tabular}{@{}ll}
     \hline
-    CERN    & Storage backend for ATLAS detector \tinycite{cern} \\
+    CERN    & Storage backend for ATLAS detector \tinycite{cassandra_cern} \\
     \hline
     Netflix & 2,500 nodes, 420 TB, over 1 trillion requests per day \\
-            & Migrated from Oracle to Cassandra \tinycite{netflix} \\
+            & Migrated from Oracle to Cassandra \tinycite{cassandra_netflix} \\
     \hline
     eBay    & 6 billion writes and 5 billion reads daily \\
-            & Single Cassandra table of 40TB \tinycite{ebay, ebay2} \\
+            & Single Cassandra table of 40TB \tinycite{cassandra_ebay, cassandra_ebay2} \\
     \hline
     \onslide<2->
     Apple   & >75k Cassandra nodes with \textbf{10PB} in production \\
-            & Several clusters with \textbf{1000+ nodes each!} \tinycite{apple} \\
+            & Several clusters with \textbf{1000+ nodes each!} \tinycite{cassandra_apple} \\
     \hline
   \end{tabular}
 
@@ -227,12 +227,12 @@
 
 \end{frame}
 
-\begin{frame}{Suitable Use-Cases \tinycite{netflix, apple, ebay}}
+\begin{frame}{Suitable Use-Cases \tinycite{cassandra_netflix, cassandra_apple, cassandra_ebay}}
   Concrete use-cases
   \begin{itemize}
     \item<1-> Recording of transactions
       \begin{itemize}
-        \item{Shopping cart (fraud detection) \tinycite{usecaseFraud}}
+        \item{Shopping cart (fraud detection) \tinycite{cassandra_usecase_fraud}}
         \item{User transactions (e.g messages)}
       \end{itemize}
     \item<2-> Time series data
